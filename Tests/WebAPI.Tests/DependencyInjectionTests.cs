@@ -5,6 +5,7 @@ using FluentAssertions;
 using Infrastructures;
 using Infrastructures.Repositories;
 using Infrastructures.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics;
@@ -18,10 +19,14 @@ namespace WebAPI.Tests
         private readonly ServiceProvider _serviceProvider;
         public DependencyInjectionTests()
         {
+            var builder = WebApplication.CreateBuilder();
             var service = new ServiceCollection();
-            service.AddWebAPIService();
+            service.AddWebAPIService(builder.Configuration["JWT:Key"]!,
+                                  builder.Configuration["JWT:Issuer"]!,
+                                  builder.Configuration["JWT:Audience"]!,
+                                  builder.Configuration["BaseUrl:Outlook"]!);
             service.AddInfrastructuresService("mock");
-            service.AddDbContext<AppDbContext>(
+            service.AddDbContext<ApplicationDbContext>(
                 option => option.UseInMemoryDatabase("test"));
             _serviceProvider = service.BuildServiceProvider();
         }
@@ -34,16 +39,16 @@ namespace WebAPI.Tests
             var exceptionMiddlewareResolved = _serviceProvider.GetRequiredService<GlobalExceptionMiddleware>();
             var performanceMiddleware = _serviceProvider.GetRequiredService<PerformanceMiddleware>();
             var stopwatchResolved = _serviceProvider.GetRequiredService<Stopwatch>();
-            var chemicalServiceResolved = _serviceProvider.GetRequiredService<IChemicalService>();
-            var chemicalRepositoryResolved = _serviceProvider.GetRequiredService<IChemicalRepository>();
+            var bookServiceResolved = _serviceProvider.GetRequiredService<IBookService>();
+            var bookRepositoryResolved = _serviceProvider.GetRequiredService<IBookRepository>();
 
             currentTimeServiceResolved.GetType().Should().Be(typeof(CurrentTime));
             claimsServiceServiceResolved.GetType().Should().Be(typeof(ClaimsService));
             exceptionMiddlewareResolved.GetType().Should().Be(typeof(GlobalExceptionMiddleware));
             performanceMiddleware.GetType().Should().Be(typeof(PerformanceMiddleware));
             stopwatchResolved.GetType().Should().Be(typeof(Stopwatch));
-            chemicalServiceResolved.GetType().Should().Be(typeof(ChemicalService));
-            chemicalRepositoryResolved.GetType().Should().Be(typeof(ChemicalRepository));
+            bookServiceResolved.GetType().Should().Be(typeof(BookService));
+            bookRepositoryResolved.GetType().Should().Be(typeof(BookRepository));
         }
     }
 }

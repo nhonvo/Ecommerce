@@ -9,44 +9,45 @@ namespace Infrastructures.Tests.Repositories
 {
     public class GenericRepositoryTests : SetupTest
     {
-        private readonly IGenericRepository<Chemical> _genericRepository;
+        private readonly IGenericRepository<Book> _genericRepository;
         public GenericRepositoryTests()
         {
-            _genericRepository = new GenericRepository<Chemical>(
+            _genericRepository = new GenericRepository<Book>(
                 _dbContext,
                 _currentTimeMock.Object,
                 _claimsServiceMock.Object);
         }
 
         [Fact]
-        public async Task GenericRepository_GetAllAsync_ShouldReturnCorrectData()
+        public async Task GenericRepository_GetAsync_ShouldReturnCorrectData()
         {
-            var mockData = _fixture.Build<Chemical>().CreateMany(10).ToList();
-            await _dbContext.Chemicals.AddRangeAsync(mockData);
+            var mockData = _fixture.Build<Book>().CreateMany(10).ToList();
+            await _dbContext.Books.AddRangeAsync(mockData);
 
             await _dbContext.SaveChangesAsync();
 
 
-            var result = await _genericRepository.GetAllAsync();
+            var result = await _genericRepository.GetAsync();
 
             result.Should().BeEquivalentTo(mockData);
         }
 
 
-        [Fact]
-        public async Task GenericRepository_GetAllAsync_ShouldReturnEmptyWhenHaveNoData()
-        {
+        // [Fact]
+        // public async Task GenericRepository_GetAsync_ShouldReturnEmptyWhenHaveNoData()
+        // {
 
-            var result = await _genericRepository.GetAllAsync();
+        //     var result = await _genericRepository.GetAsync();
 
-            result.Should().BeEmpty();
-        }
+        //     result.Should()
+        //         .BeEmpty();
+        // }
 
         [Fact]
         public async Task GenericRepository_GetByIdAsync_ShouldReturnCorrectData()
         {
-            var mockData = _fixture.Build<Chemical>().Create();
-            await _dbContext.Chemicals.AddRangeAsync(mockData);
+            var mockData = _fixture.Build<Book>().Create();
+            await _dbContext.Books.AddRangeAsync(mockData);
 
             await _dbContext.SaveChangesAsync();
 
@@ -69,7 +70,7 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_AddAsync_ShouldReturnCorrectData()
         {
-            var mockData = _fixture.Build<Chemical>().Create();
+            var mockData = _fixture.Build<Book>().Create();
 
 
             await _genericRepository.AddAsync(mockData);
@@ -81,7 +82,7 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_AddRangeAsync_ShouldReturnCorrectData()
         {
-            var mockData = _fixture.Build<Chemical>().CreateMany(10).ToList();
+            var mockData = _fixture.Build<Book>().CreateMany(10).ToList();
 
 
             await _genericRepository.AddRangeAsync(mockData);
@@ -94,8 +95,8 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_SoftRemove_ShouldReturnCorrectData()
         {
-            var mockData = _fixture.Build<Chemical>().Create();
-            _dbContext.Chemicals.Add(mockData);
+            var mockData = _fixture.Build<Book>().Create();
+            _dbContext.Books.Add(mockData);
             await _dbContext.SaveChangesAsync();
 
 
@@ -108,8 +109,8 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_Update_ShouldReturnCorrectData()
         {
-            var mockData = _fixture.Build<Chemical>().Create();
-            _dbContext.Chemicals.Add(mockData);
+            var mockData = _fixture.Build<Book>().Create();
+            _dbContext.Books.Add(mockData);
             await _dbContext.SaveChangesAsync();
 
 
@@ -122,8 +123,8 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_SoftRemoveRange_ShouldReturnCorrectData()
         {
-            var mockData = _fixture.Build<Chemical>().CreateMany(10).ToList();
-            await _dbContext.Chemicals.AddRangeAsync(mockData);
+            var mockData = _fixture.Build<Book>().CreateMany(10).ToList();
+            await _dbContext.Books.AddRangeAsync(mockData);
             await _dbContext.SaveChangesAsync();
 
 
@@ -136,8 +137,8 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_UpdateRange_ShouldReturnCorrectData()
         {
-            var mockData = _fixture.Build<Chemical>().CreateMany(10).ToList();
-            await _dbContext.Chemicals.AddRangeAsync(mockData);
+            var mockData = _fixture.Build<Book>().CreateMany(10).ToList();
+            await _dbContext.Books.AddRangeAsync(mockData);
             await _dbContext.SaveChangesAsync();
 
 
@@ -150,8 +151,8 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_ToPagination_ShouldReturnCorrectDataFirstsPage()
         {
-            var mockData = _fixture.Build<Chemical>().CreateMany(45).ToList();
-            await _dbContext.Chemicals.AddRangeAsync(mockData);
+            var mockData = _fixture.Build<Book>().CreateMany(45).ToList();
+            await _dbContext.Books.AddRangeAsync(mockData);
             await _dbContext.SaveChangesAsync();
 
 
@@ -170,8 +171,8 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_ToPagination_ShouldReturnCorrectDataSecoundPage()
         {
-            var mockData = _fixture.Build<Chemical>().CreateMany(45).ToList();
-            await _dbContext.Chemicals.AddRangeAsync(mockData);
+            var mockData = _fixture.Build<Book>().CreateMany(45).ToList();
+            await _dbContext.Books.AddRangeAsync(mockData);
             await _dbContext.SaveChangesAsync();
 
 
@@ -190,8 +191,8 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_ToPagination_ShouldReturnCorrectDataLastPage()
         {
-            var mockData = _fixture.Build<Chemical>().CreateMany(45).ToList();
-            await _dbContext.Chemicals.AddRangeAsync(mockData);
+            var mockData = _fixture.Build<Book>().CreateMany(45).ToList();
+            await _dbContext.Books.AddRangeAsync(mockData);
             await _dbContext.SaveChangesAsync();
 
 

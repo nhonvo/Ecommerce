@@ -1,4 +1,4 @@
-﻿using Application.ViewModels.ChemicalsViewModels;
+﻿using Application.ViewModels.Book;
 using AutoFixture;
 using Domain.Entities;
 using Domain.Tests;
@@ -12,13 +12,13 @@ namespace Infrastructures.Tests.Mappers
         public void TestMapper()
         {
             //arrange
-            var chemicalMock = _fixture.Build<Chemical>().Create();
+            var bookMock = _fixture.Build<Book>().Create();
 
             //act
-            var result = _mapperConfig.Map<ChemicalViewModel>(chemicalMock);
+            var result = _mapperConfig.Map<BookResponse>(bookMock);
 
             //assert
-            result._Id.Should().Be(chemicalMock.Id.ToString());
+            result.Id.Should().Be(bookMock.Id.ToString());
         }
     }
 }
