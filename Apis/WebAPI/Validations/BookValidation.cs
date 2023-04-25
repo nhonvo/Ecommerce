@@ -1,15 +1,14 @@
+using Application.ViewModels.Book;
 using Domain.Entities;
 using FluentValidation;
 
 namespace WebAPI.Validations
 {
-    public class BookValidation : AbstractValidator<Book>
+    public class BookValidation : AbstractValidator<SearchRequest>
     {
         public BookValidation()
         {
-            // RuleFor(x => x.message.ccRecipients)
-            //     .Must(BeUnique)
-            //     .WithMessage("The ccRecipients list must contain only unique values.");
+            RuleFor(x => x.Title).MinimumLength(50);
         }
 
     }
