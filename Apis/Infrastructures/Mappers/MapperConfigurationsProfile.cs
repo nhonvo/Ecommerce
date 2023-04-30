@@ -22,9 +22,9 @@ namespace Infrastructures.Mappers
             CreateMap<RegisterRequest, User>().ReverseMap();
 
             // Book
-            CreateMap<Book, BookResponse>().ReverseMap();
-            CreateMap<CreateBook, Book>().ReverseMap();
-            CreateMap<UpdateBook, Book>().ReverseMap();
+            CreateMap<Product, BookResponse>().ReverseMap();
+            CreateMap<CreateBook, Product>().ReverseMap();
+            CreateMap<UpdateBook, Product>().ReverseMap();
 
 
         }

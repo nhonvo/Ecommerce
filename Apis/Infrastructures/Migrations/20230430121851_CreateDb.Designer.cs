@@ -4,6 +4,7 @@ using Infrastructures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructures.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230430121851_CreateDb")]
+    partial class CreateDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,28 +71,6 @@ namespace Infrastructures.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("00000001-0000-0000-0000-000000000000"),
-                            Address = "69 Bùi Thị Xuân",
-                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "vothuongtruongnhon2002@gmail.com",
-                            IsDeleted = false,
-                            Name = "Võ Thương Trường Nhơn",
-                            Phone = "0901238495"
-                        },
-                        new
-                        {
-                            Id = new Guid("00000002-0000-0000-0000-000000000000"),
-                            Address = "67 Bùi Thị Xuân",
-                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "fptvttnhon2017@gmail.com",
-                            IsDeleted = false,
-                            Name = "Bùi Quang Thọ",
-                            Phone = "0901238495"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Order", b =>
@@ -133,26 +114,6 @@ namespace Infrastructures.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("00000001-0000-0000-0000-000000000000"),
-                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CustomerId = new Guid("00000002-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            OrderDate = new DateTime(2023, 4, 18, 1, 1, 1, 0, DateTimeKind.Unspecified),
-                            TotalAmount = 1000000m
-                        },
-                        new
-                        {
-                            Id = new Guid("00000002-0000-0000-0000-000000000000"),
-                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CustomerId = new Guid("00000001-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            OrderDate = new DateTime(2023, 4, 18, 1, 1, 1, 0, DateTimeKind.Unspecified),
-                            TotalAmount = 1000000m
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.OrderDetail", b =>
@@ -195,17 +156,6 @@ namespace Infrastructures.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("OrderDetails");
-
-                    b.HasData(
-                        new
-                        {
-                            OrderId = new Guid("00000001-0000-0000-0000-000000000000"),
-                            ProductId = new Guid("00000001-0000-0000-0000-000000000000"),
-                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
-                            IsDeleted = false,
-                            Quantity = 2
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Product", b =>
@@ -249,26 +199,6 @@ namespace Infrastructures.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Books");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("00000001-0000-0000-0000-000000000000"),
-                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "the headphone is the most popular product",
-                            IsDeleted = false,
-                            Name = "Headphone",
-                            Price = 500000m
-                        },
-                        new
-                        {
-                            Id = new Guid("00000002-0000-0000-0000-000000000000"),
-                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "the telephone is the most popular product",
-                            IsDeleted = false,
-                            Name = "Telephone",
-                            Price = 540000m
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>

@@ -12,7 +12,7 @@ namespace Infrastructures.Tests.Mappers
         public void TestMapper()
         {
             //arrange
-            var bookMock = _fixture.Build<Book>().Create();
+            var bookMock = _fixture.Build<Product>().Create();
 
             //act
             var result = _mapperConfig.Map<BookResponse>(bookMock);

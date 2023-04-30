@@ -12,9 +12,9 @@ namespace Infrastructures.Tests
         public async Task AppDbContext_BooksDbSetShouldReturnCorrectData()
         {
 
-            var mockData = _fixture.Build<Book>().CreateMany(10).ToList();
+            var mockData = _fixture.Build<Product>().CreateMany(10).ToList();
             await _dbContext.Books.AddRangeAsync(mockData);
-            
+
             await _dbContext.SaveChangesAsync();
 
             var result = await _dbContext.Books.ToListAsync();

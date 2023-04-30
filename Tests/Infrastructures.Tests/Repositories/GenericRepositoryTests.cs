@@ -9,10 +9,10 @@ namespace Infrastructures.Tests.Repositories
 {
     public class GenericRepositoryTests : SetupTest
     {
-        private readonly IGenericRepository<Book> _genericRepository;
+        private readonly IGenericRepository<Product> _genericRepository;
         public GenericRepositoryTests()
         {
-            _genericRepository = new GenericRepository<Book>(
+            _genericRepository = new GenericRepository<Product>(
                 _dbContext,
                 _currentTimeMock.Object,
                 _claimsServiceMock.Object);
@@ -21,7 +21,7 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_GetAsync_ShouldReturnCorrectData()
         {
-            var mockData = _fixture.Build<Book>().CreateMany(10).ToList();
+            var mockData = _fixture.Build<Product>().CreateMany(10).ToList();
             await _dbContext.Books.AddRangeAsync(mockData);
 
             await _dbContext.SaveChangesAsync();
@@ -46,7 +46,7 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_GetByIdAsync_ShouldReturnCorrectData()
         {
-            var mockData = _fixture.Build<Book>().Create();
+            var mockData = _fixture.Build<Product>().Create();
             await _dbContext.Books.AddRangeAsync(mockData);
 
             await _dbContext.SaveChangesAsync();
@@ -70,7 +70,7 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_AddAsync_ShouldReturnCorrectData()
         {
-            var mockData = _fixture.Build<Book>().Create();
+            var mockData = _fixture.Build<Product>().Create();
 
 
             await _genericRepository.AddAsync(mockData);
@@ -82,7 +82,7 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_AddRangeAsync_ShouldReturnCorrectData()
         {
-            var mockData = _fixture.Build<Book>().CreateMany(10).ToList();
+            var mockData = _fixture.Build<Product>().CreateMany(10).ToList();
 
 
             await _genericRepository.AddRangeAsync(mockData);
@@ -95,7 +95,7 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_SoftRemove_ShouldReturnCorrectData()
         {
-            var mockData = _fixture.Build<Book>().Create();
+            var mockData = _fixture.Build<Product>().Create();
             _dbContext.Books.Add(mockData);
             await _dbContext.SaveChangesAsync();
 
@@ -109,7 +109,7 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_Update_ShouldReturnCorrectData()
         {
-            var mockData = _fixture.Build<Book>().Create();
+            var mockData = _fixture.Build<Product>().Create();
             _dbContext.Books.Add(mockData);
             await _dbContext.SaveChangesAsync();
 
@@ -123,7 +123,7 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_SoftRemoveRange_ShouldReturnCorrectData()
         {
-            var mockData = _fixture.Build<Book>().CreateMany(10).ToList();
+            var mockData = _fixture.Build<Product>().CreateMany(10).ToList();
             await _dbContext.Books.AddRangeAsync(mockData);
             await _dbContext.SaveChangesAsync();
 
@@ -137,7 +137,7 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_UpdateRange_ShouldReturnCorrectData()
         {
-            var mockData = _fixture.Build<Book>().CreateMany(10).ToList();
+            var mockData = _fixture.Build<Product>().CreateMany(10).ToList();
             await _dbContext.Books.AddRangeAsync(mockData);
             await _dbContext.SaveChangesAsync();
 
@@ -151,7 +151,7 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_ToPagination_ShouldReturnCorrectDataFirstsPage()
         {
-            var mockData = _fixture.Build<Book>().CreateMany(45).ToList();
+            var mockData = _fixture.Build<Product>().CreateMany(45).ToList();
             await _dbContext.Books.AddRangeAsync(mockData);
             await _dbContext.SaveChangesAsync();
 
@@ -171,7 +171,7 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_ToPagination_ShouldReturnCorrectDataSecoundPage()
         {
-            var mockData = _fixture.Build<Book>().CreateMany(45).ToList();
+            var mockData = _fixture.Build<Product>().CreateMany(45).ToList();
             await _dbContext.Books.AddRangeAsync(mockData);
             await _dbContext.SaveChangesAsync();
 
@@ -191,7 +191,7 @@ namespace Infrastructures.Tests.Repositories
         [Fact]
         public async Task GenericRepository_ToPagination_ShouldReturnCorrectDataLastPage()
         {
-            var mockData = _fixture.Build<Book>().CreateMany(45).ToList();
+            var mockData = _fixture.Build<Product>().CreateMany(45).ToList();
             await _dbContext.Books.AddRangeAsync(mockData);
             await _dbContext.SaveChangesAsync();
 

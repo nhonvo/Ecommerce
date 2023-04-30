@@ -4,7 +4,7 @@ using Domain.Entities;
 
 namespace Infrastructures.Repositories
 {
-    public class BookRepository : GenericRepository<Book>, IBookRepository
+    public class BookRepository : GenericRepository<Product>, IBookRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -17,9 +17,9 @@ namespace Infrastructures.Repositories
         {
             _context = context;
         }
-        public IQueryable<Book> AsQueryable()
+        public IQueryable<Product> AsQueryable()
         {
-            return _context.Set<Book>().AsQueryable();
+            return _context.Set<Product>().AsQueryable();
         }
     }
 }

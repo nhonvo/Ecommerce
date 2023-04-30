@@ -22,7 +22,7 @@ namespace Infrastructures.Tests.Repositories
         public async Task BookRepository_Should_ReturnCorrectData()
         {
             // arrange
-            var mockData = _fixture.Build<Book>().CreateMany(10).ToList();
+            var mockData = _fixture.Build<Product>().CreateMany(10).ToList();
             await _dbContext.Books.AddRangeAsync(mockData);
             await _dbContext.SaveChangesAsync();
 

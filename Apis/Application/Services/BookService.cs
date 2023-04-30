@@ -104,9 +104,9 @@ namespace Infrastructures.Services
         /// </summary>
         /// <param name="query">The query to filter.</param>
         /// <param name="author">The author to search for in the query. Note that this is a case</param>
-        private IQueryable<Book> FilterByAuthor(IQueryable<Book> query, string author)
+        private IQueryable<Product> FilterByAuthor(IQueryable<Product> query, string author)
         {
-            return query.Where(x => x.Author.Contains(author));
+            return query.Where(x => x.Name.Contains(author));
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace Infrastructures.Services
         /// </summary>
         /// <param name="query">The query to filter.</param>
         /// <param name="title">The title to search for in the query's</param>
-        private IQueryable<Book> FilterByTitle(IQueryable<Book> query, string title)
+        private IQueryable<Product> FilterByTitle(IQueryable<Product> query, string title)
         {
-            return query.Where(x => x.Title.Contains(title));
+            return query.Where(x => x.Name.Contains(title));
         }
 
         /// <summary>
@@ -124,9 +124,9 @@ namespace Infrastructures.Services
         /// </summary>
         /// <param name="query">The query to filter.</param>
         /// <param name="genre">The genre to search for in the query</param>
-        private IQueryable<Book> FilterByGenre(IQueryable<Book> query, string genre)
+        private IQueryable<Product> FilterByGenre(IQueryable<Product> query, string genre)
         {
-            return query.Where(x => x.Genre.Contains(genre));
+            return query.Where(x => x.Name.Contains(genre));
         }
 
         /// <summary>
@@ -134,11 +134,11 @@ namespace Infrastructures.Services
         /// </summary>
         /// <param name="query">The query to filter.</param>
         /// <param name="publicationDate">The date to filter by. Must be in the format YYYYMM</param>
-        private IQueryable<Book> FilterByPublicationDate(IQueryable<Book> query, DateTime publicationDate)
+        private IQueryable<Product> FilterByPublicationDate(IQueryable<Product> query, DateTime publicationDate)
         {
-            return query.Where(x => x.PublicationDate.Year == publicationDate.Year
-                                    && x.PublicationDate.Month == publicationDate.Month
-                                    && x.PublicationDate.Day == publicationDate.Day);
+            return query.Where(x => x.CreationDate.Year == publicationDate.Year
+                                    && x.CreationDate.Month == publicationDate.Month
+                                    && x.CreationDate.Day == publicationDate.Day);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Infrastructures.Services
         /// <param name="query">The query to filter.</param>
         /// <param name="startPrice">The price to start with. Must be greater than or equal to this value.</param>
         /// <param name="endPrice">The price to end with. Must be greater than or equal to this value</param>
-        private IQueryable<Book> FilterByPriceRange(IQueryable<Book> query, decimal startPrice, decimal endPrice)
+        private IQueryable<Product> FilterByPriceRange(IQueryable<Product> query, decimal startPrice, decimal endPrice)
         {
             return query.Where(x => x.Price > startPrice && x.Price < endPrice);
         }
@@ -160,9 +160,9 @@ namespace Infrastructures.Services
         /// <param name="pageSize">The size of the page to search. 0 for</param>
         public async Task<ApiResult<Pagination<BookResponse>>> Search(string query, int pageIndex, int pageSize)
         {
-            var result = await _unitOfWork.BookRepository.GetAsync(x => x.Title.Contains(query)
-                                                                        || x.Author.Contains(query)
-                                                                        || x.Genre.Contains(query), pageIndex, pageSize);
+            var result = await _unitOfWork.BookRepository.GetAsync(x => x.Name.Contains(query)
+                                                                        || x.Name.Contains(query)
+                                                                        || x.Name.Contains(query), pageIndex, pageSize);
             var books = _mapper.Map<Pagination<BookResponse>>(result);
             /// Returns a list of books that can be retrieved from the books list.
             if (books == null)
@@ -211,7 +211,7 @@ namespace Infrastructures.Services
         /// <param name="request">The request to add a book to the database</param>
         public async Task<ApiResult<BookResponse>> AddAsync(CreateBook request)
         {
-            var book = _mapper.Map<Book>(request);
+            var book = _mapper.Map<Product>(request);
             try
             {
                 _unitOfWork.BeginTransaction();
@@ -239,10 +239,10 @@ namespace Infrastructures.Services
             /// Book is not found.
             if (bookExist == null)
                 return new ApiErrorResult<BookResponse>("Book not found");
-            var book = _mapper.Map<Book>(request);
-            book.AverageRating = bookExist.AverageRating;
-            book.RatingCount = bookExist.RatingCount;
-            book.TotalRating = bookExist.TotalRating;
+            var book = _mapper.Map<Product>(request);
+            // book.AverageRating = bookExist.AverageRating;
+            // book.RatingCount = bookExist.RatingCount;
+            // book.TotalRating = bookExist.TotalRating;
             try
             {
                 _unitOfWork.BeginTransaction();

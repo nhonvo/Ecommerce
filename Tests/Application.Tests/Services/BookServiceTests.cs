@@ -156,14 +156,10 @@ namespace Application.Tests.Services
             var mockBookRepository = new Mock<IBookRepository>();
             var mockEmailService = new Mock<IEmailService>();
 
-            var book = new Book
+            var book = new Product
             {
-                Title = "Test Book",
-                Author = "Test Author",
-                Genre = "Test Genre",
-                Price = 9.99m,
-                Inventory = 10,
-                Image = "http://testimage.com/image.jpg"
+                Name = "Test Book",
+                Price = 9.99m
             };
 
             var bookResponse = new BookResponse
@@ -176,7 +172,7 @@ namespace Application.Tests.Services
                 Image = "http://testimage.com/image.jpg"
             };
 
-            mockMapper.Setup(m => m.Map<Book>(createBook)).Returns(book);
+            mockMapper.Setup(m => m.Map<Product>(createBook)).Returns(book);
             mockMapper.Setup(m => m.Map<BookResponse>(book)).Returns(bookResponse);
 
             mockUnitOfWork.Setup(u => u.BeginTransaction());
