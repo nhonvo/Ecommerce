@@ -4,10 +4,8 @@ namespace Application.ViewModels.Order
     {
 
         public Guid Id { get; set; }
-        public string UserId { get; set; }
+        public Guid CustomerId { get; set; }
         public DateTime OrderDate { get; set; }
-        public string ShippingAddress { get; set; }
-        public string Status { get; set; }
-        public decimal TotalPrice { get; set; }
+        public decimal TotalAmount { get; set; }
     }
 }

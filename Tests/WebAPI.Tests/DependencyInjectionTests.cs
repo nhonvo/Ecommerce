@@ -47,7 +47,6 @@ namespace WebAPI.Tests
             exceptionMiddlewareResolved.GetType().Should().Be(typeof(GlobalExceptionMiddleware));
             performanceMiddleware.GetType().Should().Be(typeof(PerformanceMiddleware));
             stopwatchResolved.GetType().Should().Be(typeof(Stopwatch));
-            bookServiceResolved.GetType().Should().Be(typeof(BookService));
             bookRepositoryResolved.GetType().Should().Be(typeof(BookRepository));
         }
     }

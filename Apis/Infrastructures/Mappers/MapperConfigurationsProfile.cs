@@ -2,10 +2,9 @@
 using Application.Commons;
 using Domain.Entities;
 using Application.ViewModels.UserViewModels;
-using Application.ViewModels.Book;
+using Application.ViewModels.Customer;
 using Application.ViewModels.Order;
-using Application.ViewModels.Review;
-using Application.ViewModels.WishList;
+using Application.ViewModels.Product;
 
 namespace Infrastructures.Mappers
 {
@@ -21,10 +20,21 @@ namespace Infrastructures.Mappers
             CreateMap<LoginResponse, User>().ReverseMap();
             CreateMap<RegisterRequest, User>().ReverseMap();
 
-            // Book
-            CreateMap<Product, BookResponse>().ReverseMap();
-            CreateMap<CreateBook, Product>().ReverseMap();
-            CreateMap<UpdateBook, Product>().ReverseMap();
+            // Customer
+            CreateMap<Customer, CustomerResponse>().ReverseMap();
+            CreateMap<CreateCustomer, Customer>().ReverseMap();
+            CreateMap<UpdateCustomer, Customer>().ReverseMap();
+
+            
+            // Order
+            CreateMap<Order, OrderResponse>().ReverseMap();
+            CreateMap<CreateOrder, Order>().ReverseMap();
+            CreateMap<UpdateOrder, Order>().ReverseMap();
+            
+            // Product
+            CreateMap<Product, ProductResponse>().ReverseMap();
+            CreateMap<CreateProduct, Product>().ReverseMap();
+            CreateMap<UpdateProduct, Product>().ReverseMap();
 
 
         }

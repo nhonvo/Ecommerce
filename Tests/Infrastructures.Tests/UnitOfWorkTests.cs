@@ -13,12 +13,13 @@ namespace Infrastructures.Tests
         private readonly IUnitOfWork _unitOfWork;
         public UnitOfWorkTests()
         {
-            _unitOfWork = new UnitOfWork(
-                _dbContext,
-                _userRepository.Object,
-                _bookRepository.Object
-               
-                );
+            _unitOfWork = new UnitOfWork(_dbContext,
+                                         _userRepository.Object,
+                                         _bookRepository.Object,
+                                         _customerRepository.Object,
+                                         _productRepository.Object,
+                                         _orderRepository.Object,
+                                         _orderDetailRepository.Object);
         }
 
         // [Fact]

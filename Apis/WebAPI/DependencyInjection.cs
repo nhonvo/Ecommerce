@@ -1,4 +1,8 @@
 ﻿using Application.Interfaces;
+using Application.ViewModels.Customer;
+using Application.ViewModels.Order;
+using Application.ViewModels.Product;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -7,6 +11,7 @@ using System.Diagnostics;
 using System.Text;
 using WebAPI.Middlewares;
 using WebAPI.Services;
+using WebAPI.Validations;
 
 namespace WebAPI
 {
@@ -29,8 +34,21 @@ namespace WebAPI
             services.AddHttpContextAccessor();
             services.AddFluentValidationAutoValidation();
             services.AddFluentValidationClientsideAdapters();
-            // services.AddScoped<IValidator<SendMailRequest>, SendMailRequestValidation>();
 
+            #region Validation
+            // customer
+            services.AddScoped<IValidator<CreateCustomer>, CreateCustomerValidation>();
+            services.AddScoped<IValidator<UpdateCustomer>, UpdateCustomerValidation>();
+            
+            // order
+            services.AddScoped<IValidator<CreateOrder>, CreateOrderValidation>();
+            services.AddScoped<IValidator<UpdateOrder>, UpdateOrderValidation>();
+            
+            // product
+            services.AddScoped<IValidator<CreateProduct>, CreateProductValidation>();
+            services.AddScoped<IValidator<UpdateProduct>, UpdateProductValidation>();
+            
+            #endregion
             // JWT
             services.AddAuthentication(options =>
             {

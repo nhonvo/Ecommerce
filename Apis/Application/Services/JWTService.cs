@@ -4,7 +4,6 @@ using System.Text;
 using Application.Interfaces;
 using Domain;
 using Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 

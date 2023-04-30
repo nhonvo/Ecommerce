@@ -9,15 +9,12 @@ namespace Infrastructures.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IEmailService _emailService;
 
         public OrderDetailService(
             IUnitOfWork unitOfWork,
-            IEmailService emailService,
             IMapper mapper)
         {
             _unitOfWork = unitOfWork;
-            _emailService = emailService;
             _mapper = mapper;
         }
     }

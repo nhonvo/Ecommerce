@@ -3,7 +3,6 @@ using Application.Interfaces;
 using Application.Repositories;
 using Application.Services;
 using Domain.Interfaces;
-using Domain.Services;
 using Infrastructures.Mappers;
 using Infrastructures.Repositories;
 using Infrastructures.Services;
@@ -24,11 +23,9 @@ namespace Infrastructures
 
             services.AddScoped<IJWTService, JWTService>();
 
-            services.AddScoped<IEmailService, EmailService>();
 
             // Book
             services.AddScoped<IBookRepository, BookRepository>();
-            services.AddScoped<IBookService, BookService>();
          
             // Customer
             services.AddScoped<ICustomerRepository, CustomerRepository>();
