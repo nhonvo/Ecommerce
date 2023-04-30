@@ -60,9 +60,9 @@ namespace WebAPI
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Book Store",
+                    Title = "Ecommerce",
                     Version = "v1",
-                    Description = "API for bookstores project",
+                    Description = "API for smail ecommerce project",
                     Contact = new OpenApiContact
                     {
                         Url = new Uri("https://google.com")

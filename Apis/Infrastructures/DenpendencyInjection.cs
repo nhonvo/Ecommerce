@@ -30,6 +30,22 @@ namespace Infrastructures
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IBookService, BookService>();
          
+            // Customer
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<ICustomerService, CustomerService>();
+         
+            // Product
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductService, ProductService>();
+         
+            // Order
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderService, OrderService>();
+         
+            // OrderDetail
+            services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+            services.AddScoped<IOrderDetailService, OrderDetailService>();
+         
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<ICurrentTime, CurrentTime>();
@@ -41,9 +57,6 @@ namespace Infrastructures
 
 
             services.AddMemoryCache();
-
-            // this configuration just use in-memory for fast develop
-            //services.AddDbContext<AppDbContext>(option => option.UseInMemoryDatabase("test"));
 
             services.AddAutoMapper(typeof(MapperConfigurationsProfile).Assembly);
             return services;
