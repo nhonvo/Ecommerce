@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ApiResult<CustomerResponse>>> Get(Guid id)
         {
-            var response = await _customerService.Get(id);
+            var response = await _customerService.GetAsync(id);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
                 return BadRequest();
             return Ok(response);
@@ -54,6 +54,14 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<ApiResult<CustomerResponse>>> PostOrder(Guid id, Guid orderId, UpdateCustomerOrder request)
         {
             var response = await _customerService.UpdateOrder(id, orderId, request);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest();
+            return Ok(response);
+        }
+        [HttpDelete("{id}/Order/{orderId}")]
+        public async Task<ActionResult<ApiResult<CustomerResponse>>> DeleteOrder(Guid id, Guid orderId)
+        {
+            var response = await _customerService.DeleteOrder(id, orderId);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
                 return BadRequest();
             return Ok(response);

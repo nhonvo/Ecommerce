@@ -92,7 +92,7 @@ namespace Infrastructures.Services
                 return new ApiErrorResult<CustomerResponse>("Can't delete customer", new List<string> { ex.ToString() });
             }
         }
-        public async Task<ApiResult<CustomerResponse>> Get(Guid Id)
+        public async Task<ApiResult<CustomerResponse>> GetAsync(Guid Id)
         {
             var customer = await _unitOfWork.CustomerRepository.FirstOrDefaultAsync(x => x.Id == Id);
             var result = _mapper.Map<CustomerResponse>(customer);
@@ -182,6 +182,27 @@ namespace Infrastructures.Services
             }
             throw new NotImplementedException();
         }
+        public async Task<ApiResult<OrderResponse>> DeleteOrder(Guid id, Guid orderId)
+        {
+            var order = await _unitOfWork.OrderRepository.FirstOrdDefaultAsync(
+                filter: x => x.Id == orderId && x.Customer.Id == id
+            );
+            try
+            {
+                await _unitOfWork.ExecuteTransactionAsync(() => { _unitOfWork.OrderRepository.Delete(order); });
+                var result = _mapper.Map<OrderResponse>(order);
+                return new ApiSuccessResult<OrderResponse>(result);
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+                return new ApiErrorResult<OrderResponse>("Can't delete customer", new List<string> { ex.ToString() });
+            }
+            throw new NotImplementedException();
+        }
+        #endregion
+        #region Customer OrderDetail
+
         #endregion
     }
 }
