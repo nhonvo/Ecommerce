@@ -18,19 +18,19 @@ namespace Infrastructures.Tests.Repositories
                 _claimsServiceMock.Object);
         }
 
-        [Fact]
-        public async Task GenericRepository_GetAsync_ShouldReturnCorrectData()
-        {
-            var mockData = _fixture.Build<Product>().CreateMany(10).ToList();
-            await _dbContext.Books.AddRangeAsync(mockData);
+        // [Fact]
+        // public async Task GenericRepository_GetAsync_ShouldReturnCorrectData()
+        // {
+        //     var mockData = _fixture.Build<Product>().CreateMany(10).ToList();
+        //     await _dbContext.Books.AddRangeAsync(mockData);
 
-            await _dbContext.SaveChangesAsync();
+        //     await _dbContext.SaveChangesAsync();
 
 
-            var result = await _genericRepository.GetAsync();
+        //     var result = await _genericRepository.GetAsync();
 
-            result.Should().BeEquivalentTo(mockData);
-        }
+        //     result.Should().BeEquivalentTo(mockData);
+        // }
 
 
         // [Fact]

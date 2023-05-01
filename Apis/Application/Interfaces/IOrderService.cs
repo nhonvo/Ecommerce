@@ -16,6 +16,6 @@ namespace Application.Interfaces
         Task<ApiResult<OrderResponse>> AddAsync(CreateOrder request);
         Task<ApiResult<OrderResponse>> Update(UpdateOrder request);
         Task<ApiResult<OrderResponse>> Delete(string Id);
-        Task<ApiResult<OrderResponse>> GetByIdAsync(string Id);
+        Task<ApiResult<OrderResponse>> Get(Guid Id);
     }
 }

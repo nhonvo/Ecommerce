@@ -61,7 +61,8 @@ OrderItem belongs to one Product and one Order
 3. Add error handling to the endpoints to return appropriate HTTP error codes and error messages when something goes wrong.
 4. Using unit of work, generic repository, repository to complete this excercise
 5. Consider adding pagination, filtering, and sorting to the endpoints that return lists of entities to improve performance and usability.
-9. Search functionality a search endpoint for customers might allow searching by name, email, or phone number. This would allow users to easily find the customer they are looking for. GET /api/customers/search
+// TODO: test getasync() which has sort feature
+6. Search functionality a search endpoint for customers might allow searching by name, email, or phone number. This would allow users to easily find the customer they are looking for. GET /api/customers/search
 a) Example: /api/customers/search?name=John%20Doe
 1.  Implement similier feature for orders and products
 2.  Statistics and reports: Create endpoints that allow users to view statistics and reports on customer orders. For example, an endpoint that returns the total number of orders placed by a customer, or an endpoint that returns the top-selling products in a given time period.

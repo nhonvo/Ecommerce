@@ -93,9 +93,9 @@ namespace Infrastructures.Services
                 return new ApiErrorResult<ProductResponse>("Can't delete product", new List<string> { ex.ToString() });
             }
         }
-        public async Task<ApiResult<ProductResponse>> GetByIdAsync(string Id)
+        public async Task<ApiResult<ProductResponse>> Get(Guid Id)
         {
-            var product = await _unitOfWork.ProductRepository.FirstOrDefaultAsync(x => x.Id.ToString() == Id);
+            var product = await _unitOfWork.ProductRepository.FirstOrDefaultAsync(x => x.Id == Id);
             var result = _mapper.Map<ProductResponse>(product);
             /// Returns the result of the product.
             if (result == null)

@@ -93,9 +93,9 @@ namespace Infrastructures.Services
                 return new ApiErrorResult<OrderResponse>("Can't delete order", new List<string> { ex.ToString() });
             }
         }
-        public async Task<ApiResult<OrderResponse>> GetByIdAsync(string Id)
+        public async Task<ApiResult<OrderResponse>> Get(Guid Id)
         {
-            var order = await _unitOfWork.OrderRepository.FirstOrDefaultAsync(x => x.Id.ToString() == Id);
+            var order = await _unitOfWork.OrderRepository.FirstOrDefaultAsync(x => x.Id == Id);
             var result = _mapper.Map<OrderResponse>(order);
             /// Returns the result of the order.
             if (result == null)

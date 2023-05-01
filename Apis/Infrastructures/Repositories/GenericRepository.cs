@@ -4,6 +4,7 @@ using Application.Commons;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Domain.Enums;
 
 namespace Infrastructures.Repositories
 {
@@ -101,6 +102,54 @@ namespace Infrastructures.Repositories
             return result;
         }
 
+        public async Task<Pagination<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,
+                                                        Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null,
+                                                        int pageIndex = 0,
+                                                        int pageSize = 10,
+                                                        Expression<Func<TEntity, object>> sortColumn = null,
+                                                        SortDirection sortDirection = SortDirection.Descending)
+        {
+            var query = _dbSet.AsQueryable();
+
+            // Include related entities if specified
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            // Apply filtering if specified
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            // Apply sorting if specified
+            if (sortColumn != null)
+            {
+                query = sortDirection == SortDirection.Ascending
+                    ? query.OrderBy(sortColumn)
+                    : query.OrderByDescending(sortColumn);
+            }
+
+            // Calculate the total item count for the query
+            var itemCount = await query.CountAsync();
+
+            // Apply pagination to the query
+            var items = await query.Skip(pageIndex * pageSize)
+                                    .Take(pageSize)
+                                    .ToListAsync();
+
+            // Create the pagination result
+            var result = new Pagination<TEntity>()
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                TotalItemsCount = itemCount,
+                Items = items,
+            };
+
+            return result;
+        }
 
         public async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter) => await _dbSet.Where(filter).ToListAsync();
 

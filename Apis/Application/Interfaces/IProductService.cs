@@ -17,7 +17,7 @@ namespace Application.Interfaces
         public Task<ApiResult<ProductResponse>> AddAsync(CreateProduct request);
         public Task<ApiResult<ProductResponse>> Update(UpdateProduct request);
         public Task<ApiResult<ProductResponse>> Delete(string Id);
-        public Task<ApiResult<ProductResponse>> GetByIdAsync(string Id);
+        public Task<ApiResult<ProductResponse>> Get(Guid Id);
 
     }
 }

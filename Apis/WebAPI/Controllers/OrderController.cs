@@ -6,6 +6,7 @@ using Domain.Aggregate.AppResult;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Application.ViewModels.Order;
+using System.Net;
 
 namespace WebAPI.Controllers
 {
@@ -17,20 +18,50 @@ namespace WebAPI.Controllers
         {
             _orderService = orderService;
         }
-        [HttpGet("Id")]
-        public async Task<ApiResult<OrderResponse>> Get(string Id)
-            => await _orderService.GetByIdAsync(Id);
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ApiResult<OrderResponse>>> Get(Guid id)
+        {
+            var response = await _orderService.Get(id);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest();
+            return Ok(response);
+        }
+
         [HttpGet]
-        public async Task<ApiResult<Pagination<OrderResponse>>> Get(int pageIndex = 0, int pageSize = 10)
-            => await _orderService.GetAsync(pageIndex, pageSize);
+        public async Task<ActionResult<ApiResult<Pagination<OrderResponse>>>> Get(int pageIndex = 0, int pageSize = 10)
+        {
+            var response = await _orderService.GetAsync(pageIndex, pageSize);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest();
+            return Ok(response);
+        }
+
         [HttpPost]
-        public async Task<ApiResult<OrderResponse>> Post([FromBody] CreateOrder request)
-            => await _orderService.AddAsync(request);
+        public async Task<ActionResult<ApiResult<OrderResponse>>> Post([FromBody] CreateOrder request)
+        {
+            var response = await _orderService.AddAsync(request);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest();
+            return Ok(response);
+        }
+
         [HttpPut]
-        public async Task<ApiResult<OrderResponse>> Put(UpdateOrder request)
-            => await _orderService.Update(request);
+        public async Task<ActionResult<ApiResult<OrderResponse>>> Put(UpdateOrder request)
+        {
+            var response = await _orderService.Update(request);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest();
+            return Ok(response);
+        }
+
         [HttpDelete]
-        public async Task<ApiResult<OrderResponse>> Delete(string id)
-            => await _orderService.Delete(id);
+        public async Task<ActionResult<ApiResult<OrderResponse>>> Delete(string id)
+        {
+            var response = await _orderService.Delete(id);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest();
+            return Ok(response);
+        }
+
     }
 }

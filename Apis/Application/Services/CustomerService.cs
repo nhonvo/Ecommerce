@@ -94,9 +94,9 @@ namespace Infrastructures.Services
                 return new ApiErrorResult<CustomerResponse>("Can't delete customer", new List<string> { ex.ToString() });
             }
         }
-        public async Task<ApiResult<CustomerResponse>> GetByIdAsync(string Id)
+        public async Task<ApiResult<CustomerResponse>> Get(Guid Id)
         {
-            var customer = await _unitOfWork.CustomerRepository.FirstOrDefaultAsync(x => x.Id.ToString() == Id);
+            var customer = await _unitOfWork.CustomerRepository.FirstOrDefaultAsync(x => x.Id == Id);
             var result = _mapper.Map<CustomerResponse>(customer);
             /// Returns the result of the customer.
             if (result == null)

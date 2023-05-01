@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Application.ViewModels.Order;
 using Application.ViewModels.Product;
+using System.Net;
 
 namespace WebAPI.Controllers
 {
@@ -18,20 +19,52 @@ namespace WebAPI.Controllers
         {
             _productService = productService;
         }
-        [HttpGet("Id")]
-        public async Task<ApiResult<ProductResponse>> Get(string Id)
-          => await _productService.GetByIdAsync(Id);
+        // TODO: fix the name of endpoint
+        // TODO: refactor project delete book, remove unuse using
+        // TODO: write unit test.
+        // TODO: fix the response of controller the status code
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ApiResult<ProductResponse>>> Get(Guid id)
+        {
+            var response = await _productService.Get(id);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest();
+            return Ok(response);
+        }
         [HttpGet]
-        public async Task<ApiResult<Pagination<ProductResponse>>> Get(int pageIndex = 0, int pageSize = 10)
-            => await _productService.GetAsync(pageIndex, pageSize);
+        public async Task<ActionResult<ApiResult<Pagination<ProductResponse>>>> Get(int pageIndex = 0, int pageSize = 10)
+        {
+            var response = await _productService.GetAsync(pageIndex, pageSize);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest();
+            return Ok(response);
+        }
+
         [HttpPost]
-        public async Task<ApiResult<ProductResponse>> Post([FromBody] CreateProduct request)
-            => await _productService.AddAsync(request);
+        public async Task<ActionResult<ApiResult<ProductResponse>>> Post([FromBody] CreateProduct request)
+        {
+            var response = await _productService.AddAsync(request);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest();
+            return Ok(response);
+        }
+
         [HttpPut]
-        public async Task<ApiResult<ProductResponse>> Put(UpdateProduct request)
-            => await _productService.Update(request);
+        public async Task<ActionResult<ApiResult<ProductResponse>>> Put(UpdateProduct request)
+        {
+            var response = await _productService.Update(request);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest();
+            return Ok(response);
+        }
+
         [HttpDelete]
-        public async Task<ApiResult<ProductResponse>> Delete(string id)
-            => await _productService.Delete(id);
+        public async Task<ActionResult<ApiResult<ProductResponse>>> Delete(string id)
+        {
+            var response = await _productService.Delete(id);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest();
+            return Ok(response);
+        }
     }
 }

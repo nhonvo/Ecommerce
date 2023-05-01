@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Application.Commons;
 using Domain.Entities;
+using Domain.Enums;
 
 namespace Application.Repositories
 {
@@ -47,7 +48,12 @@ namespace Application.Repositories
         /// <param name="pageIndex">Index of the page ( optional ).</param>
         /// <param name="pageSize">Size of the page ( optional ). Default is 10</param>
         Task<Pagination<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null, int pageIndex = 0, int pageSize = 10);
-
+        Task<Pagination<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,
+                                                             Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null,
+                                                             int pageIndex = 0,
+                                                             int pageSize = 10,
+                                                             Expression<Func<TEntity, object>> sortColumn = null,
+                                                             SortDirection sortDirection = SortDirection.Descending);
         /// <summary>
         /// Get entities by filter. This is an asynchronous operation. If you want to wait for the result use GetAsync ( Expression. Of ( TEntity ))
         /// </summary>
