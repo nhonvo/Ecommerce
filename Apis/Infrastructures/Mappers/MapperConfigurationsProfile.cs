@@ -24,13 +24,14 @@ namespace Infrastructures.Mappers
             CreateMap<Customer, CustomerResponse>().ReverseMap();
             CreateMap<CreateCustomer, Customer>().ReverseMap();
             CreateMap<UpdateCustomer, Customer>().ReverseMap();
+            CreateMap<CustomerOrder, Order>().ReverseMap();
 
-            
+
             // Order
             CreateMap<Order, OrderResponse>().ReverseMap();
             CreateMap<CreateOrder, Order>().ReverseMap();
             CreateMap<UpdateOrder, Order>().ReverseMap();
-            
+
             // Product
             CreateMap<Product, ProductResponse>().ReverseMap();
             CreateMap<CreateProduct, Product>().ReverseMap();

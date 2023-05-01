@@ -2,6 +2,7 @@ using Application;
 using Application.Commons;
 using Application.Interfaces;
 using Application.ViewModels.Customer;
+using Application.ViewModels.Order;
 using AutoMapper;
 using Domain.Aggregate;
 using Domain.Aggregate.AppResult;
@@ -31,15 +32,14 @@ namespace Infrastructures.Services
                 return new ApiErrorResult<Pagination<CustomerResponse>>("Can't get customer");
             return new ApiSuccessResult<Pagination<CustomerResponse>>(customers);
         }
+
+
         public async Task<ApiResult<CustomerResponse>> AddAsync(CreateCustomer request)
         {
             var customer = _mapper.Map<Customer>(request);
             try
             {
                 await _unitOfWork.ExecuteTransactionAsync(() => _unitOfWork.CustomerRepository.AddAsync(customer));
-                // _unitOfWork.BeginTransaction();
-                // await _unitOfWork.CustomerRepository.AddAsync(customer);
-                // await _unitOfWork.CommitAsync();
                 var result = _mapper.Map<CustomerResponse>(customer);
 
                 return new ApiSuccessResult<CustomerResponse>(result);
@@ -60,9 +60,7 @@ namespace Infrastructures.Services
 
             try
             {
-                _unitOfWork.BeginTransaction();
-                _unitOfWork.CustomerRepository.Update(customer);
-                await _unitOfWork.CommitAsync();
+                await _unitOfWork.ExecuteTransactionAsync(() => { _unitOfWork.CustomerRepository.Update(customer); });
                 var result = _mapper.Map<CustomerResponse>(customer);
                 return new ApiSuccessResult<CustomerResponse>(result);
             }
@@ -103,5 +101,87 @@ namespace Infrastructures.Services
                 return new ApiErrorResult<CustomerResponse>("Not found the customer");
             return new ApiSuccessResult<CustomerResponse>(result);
         }
+        private async Task<decimal> CalculateTotalPriceAsync(IEnumerable<OrderDetail> orderDetails)
+        {
+            decimal totalPrice = 0;
+
+            foreach (var item in orderDetails)
+            {
+                var product = await _unitOfWork.BookRepository.FirstOrDefaultAsync(x => x.Id == item.ProductId);
+                /// if product is not found for this ProductId
+                if (product == null)
+                {
+                    throw new Exception($"Product not found for ProductId: {item.ProductId}");
+                }
+
+                decimal itemPrice = product.Price * item.Quantity;
+                totalPrice += itemPrice;
+            }
+
+            return totalPrice;
+        }
+        #region  customer and order
+        public async Task<ApiResult<Pagination<CustomerResponse>>> GetOrder(Guid Id, int pageIndex, int pageSize)
+        {
+            var order = await _unitOfWork.CustomerRepository.GetAsync(
+                filter: x => x.Id == Id && x.Orders.Any(x => x.CustomerId == Id),
+                include: x => x.Include(x => x.Orders),
+                pageIndex: pageIndex,
+                pageSize: pageSize);
+            var result = _mapper.Map<Pagination<CustomerResponse>>(order);
+            /// Returns the result: the order of customer.
+            if (result == null)
+                return new ApiErrorResult<Pagination<CustomerResponse>>("Not found the order");
+            return new ApiSuccessResult<Pagination<CustomerResponse>>(result);
+        }
+        // TODO: OPTIMIZE enter list orderDetail
+        public async Task<ApiResult<OrderResponse>> AddOrder(Guid id)
+        {
+            var order = new Order();
+            order.CustomerId = id;
+            order.OrderDate = DateTime.Now;
+            order.OrderDetails = new List<OrderDetail>{
+                new OrderDetail{
+                    ProductId = new Guid("00000001-0000-0000-0000-000000000000"),
+                    Quantity = 3
+                },
+                new OrderDetail{
+                    ProductId = new Guid("00000002-0000-0000-0000-000000000000"),
+                    Quantity = 1
+                },
+            };
+            order.TotalAmount = await CalculateTotalPriceAsync(order.OrderDetails);
+            try
+            {
+                await _unitOfWork.ExecuteTransactionAsync(() => { _unitOfWork.OrderRepository.AddAsync(order); });
+                var result = _mapper.Map<OrderResponse>(order);
+                return new ApiSuccessResult<OrderResponse>(result);
+            }
+            catch (Exception ex)
+            {
+                return new ApiErrorResult<OrderResponse>("Can't add the order", new List<string> { ex.ToString() });
+            }
+        }
+        public async Task<ApiResult<OrderResponse>> UpdateOrder(Guid id, Guid orderId, UpdateCustomerOrder request)
+        {
+            var order = await _unitOfWork.OrderRepository.FirstOrdDefaultAsync(
+                filter: x => x.Id == orderId && x.Customer.Id == id
+            );
+            var updateOrder = _mapper.Map<Order>(request);
+            order = updateOrder;
+            try
+            {
+                await _unitOfWork.ExecuteTransactionAsync(() => { _unitOfWork.OrderRepository.Update(order); });
+                var result = _mapper.Map<OrderResponse>(order);
+                return new ApiSuccessResult<OrderResponse>(result);
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+                return new ApiErrorResult<OrderResponse>("Can't update customer", new List<string> { ex.ToString() });
+            }
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }

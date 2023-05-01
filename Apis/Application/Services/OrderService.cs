@@ -30,15 +30,45 @@ namespace Infrastructures.Services
                 return new ApiErrorResult<Pagination<OrderResponse>>("Can't get order");
             return new ApiSuccessResult<Pagination<OrderResponse>>(orders);
         }
+        private async Task<decimal> CalculateTotalPriceAsync(IEnumerable<OrderDetail> orderDetails)
+        {
+            decimal totalPrice = 0;
+
+            foreach (var item in orderDetails)
+            {
+                var product = await _unitOfWork.BookRepository.FirstOrDefaultAsync(x => x.Id == item.ProductId);
+                /// if product is not found for this ProductId
+                if (product == null)
+                {
+                    throw new Exception($"Product not found for ProductId: {item.ProductId}");
+                }
+
+                decimal itemPrice = product.Price * item.Quantity;
+                totalPrice += itemPrice;
+            }
+
+            return totalPrice;
+        }
         public async Task<ApiResult<OrderResponse>> AddAsync(CreateOrder request)
         {
             var order = _mapper.Map<Order>(request);
+
+            order.OrderDate = DateTime.Now;
+            order.OrderDetails = new List<OrderDetail>{
+                new OrderDetail{
+                    ProductId = new Guid("00000001-0000-0000-0000-000000000000"),
+                    Quantity = 3
+                },
+                new OrderDetail{
+                    ProductId = new Guid("00000002-0000-0000-0000-000000000000"),
+                    Quantity = 1
+                },
+            };
+            order.TotalAmount = await CalculateTotalPriceAsync(order.OrderDetails);
             try
             {
                 await _unitOfWork.ExecuteTransactionAsync(() => _unitOfWork.OrderRepository.AddAsync(order));
-                // _unitOfWork.BeginTransaction();
-                // await _unitOfWork.OrderRepository.AddAsync(order);
-                // await _unitOfWork.CommitAsync();
+
                 var result = _mapper.Map<OrderResponse>(order);
 
                 return new ApiSuccessResult<OrderResponse>(result);
@@ -102,5 +132,6 @@ namespace Infrastructures.Services
                 return new ApiErrorResult<OrderResponse>("Not found the order");
             return new ApiSuccessResult<OrderResponse>(result);
         }
+
     }
 }

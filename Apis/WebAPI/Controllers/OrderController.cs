@@ -26,7 +26,6 @@ namespace WebAPI.Controllers
                 return BadRequest();
             return Ok(response);
         }
-
         [HttpGet]
         public async Task<ActionResult<ApiResult<Pagination<OrderResponse>>>> Get(int pageIndex = 0, int pageSize = 10)
         {
