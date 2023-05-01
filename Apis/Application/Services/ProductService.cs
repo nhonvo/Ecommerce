@@ -102,5 +102,19 @@ namespace Infrastructures.Services
                 return new ApiErrorResult<ProductResponse>("Not found the product");
             return new ApiSuccessResult<ProductResponse>(result);
         }
+        public async Task<ApiResult<Pagination<ProductResponse>>> Search(string search, int pageIndex, int pageSize)
+        {
+            var products = await _unitOfWork.ProductRepository.GetAsync(
+                filter: x => x.Name.Contains(search)
+                             || x.Description.Contains(search)
+                             || x.Price.ToString().Contains(search),
+                pageIndex: pageIndex,
+                pageSize: pageSize
+            );
+            var result = _mapper.Map<Pagination<ProductResponse>>(products);
+            if (result == null)
+                return new ApiErrorResult<Pagination<ProductResponse>>("Can't get product");
+            return new ApiSuccessResult<Pagination<ProductResponse>>(result);
+        }
     }
 }

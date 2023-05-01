@@ -52,20 +52,23 @@ OrderItem belongs to one Product and one Order
    POST /api/customers/{id}/orders: Create a new order for a customer.
    PUT /api/customers/{id}/orders/{orderId}: Update an existing order for a customer.
    DELETE /api/customers/{id}/orders/{orderId}: Delete an order for a customer.
+// TODO: TEST this API
    GET /api/orders/{id}/orderItems: Return a list of all order items for an order.
    POST /api/orders/{id}/orderItems: Create a new order item for an order.
    PUT /api/orders/{id}/orderItems/{orderItemId}: Update an existing order item for an order.
    DELETE /api/orders/{id}/orderItems/{orderItemId}: Delete an order item for an order.
+  
 1. Test the endpoints using a tool like Postman & export it save to the git repository.
 2. Add validation to the create and update endpoints to ensure that the data being submitted is valid (using fluent validation).
 3. Add error handling to the endpoints to return appropriate HTTP error codes and error messages when something goes wrong.
-4. Using unit of work, generic repository, repository to complete this excercise
+4. Using unit of work, generic repository, repository to complete this exercise
 5. Consider adding pagination, filtering, and sorting to the endpoints that return lists of entities to improve performance and usability.
 // TODO: test getasync() which has sort feature
 6. Search functionality a search endpoint for customers might allow searching by name, email, or phone number. This would allow users to easily find the customer they are looking for. GET /api/customers/search
 a) Example: /api/customers/search?name=John%20Doe
 1.  Implement similier feature for orders and products
-2.  Statistics and reports: Create endpoints that allow users to view statistics and reports on customer orders. For example, an endpoint that returns the total number of orders placed by a customer, or an endpoint that returns the top-selling products in a given time period.
+// TODO: TEST this api too
+3.  Statistics and reports: Create endpoints that allow users to view statistics and reports on customer orders. For example, an endpoint that returns the total number of orders placed by a customer, or an endpoint that returns the top-selling products in a given time period.
 a) Implement endpoints for retrieving statistics and reports on customer orders.
 b) For example, an endpoint that returns the total number of orders placed by a customer might look like this: GET /api/customers/{id}/orders/total
 c) For example, an endpoint that returns the top-selling products in a given time period might look like this: GET /api/products/top-sellers?start=2022-01-01&end=2022-12-31

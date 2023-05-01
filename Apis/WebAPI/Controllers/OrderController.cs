@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Application.ViewModels.Order;
 using System.Net;
+using Application.ViewModels.OrderDetails;
 
 namespace WebAPI.Controllers
 {
@@ -21,7 +22,7 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ApiResult<OrderResponse>>> Get(Guid id)
         {
-            var response = await _orderService.Get(id);
+            var response = await _orderService.GetAsync(id);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
                 return BadRequest();
             return Ok(response);
@@ -54,13 +55,55 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult<ApiResult<OrderResponse>>> Delete(string id)
+        public async Task<ActionResult<ApiResult<OrderResponse>>> Delete(Guid id)
         {
             var response = await _orderService.Delete(id);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
                 return BadRequest();
             return Ok(response);
         }
+        [HttpGet("{id}/orderItems")]
+        public async Task<ActionResult<ApiResult<Pagination<OrderResponse>>>> GetOrder(Guid id, int pageIndex = 0, int pageSize = 10)
+        {
+            var response = await _orderService.GetOrder(id, pageIndex, pageSize);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest();
+            return Ok(response);
+        }
 
+        [HttpPost("{id}/orderItems")]
+        public async Task<ActionResult<ApiResult<OrderResponse>>> PostOrder(Guid id, AddOrderDetail request)
+        {
+            var response = await _orderService.AddOrder(id, request);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest();
+            return Ok(response);
+        }
+
+        [HttpPut("{id}/orderItems")]
+        public async Task<ActionResult<ApiResult<OrderResponse>>> PutOrder(Guid id, UpdateOrderDetail request)
+        {
+            var response = await _orderService.UpdateOrder(id, request);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest();
+            return Ok(response);
+        }
+
+        [HttpDelete("{id}/orderItems")]
+        public async Task<ActionResult<ApiResult<OrderResponse>>> DeleteOrder(Guid id)
+        {
+            var response = await _orderService.DeleteOrder(id);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest();
+            return Ok(response);
+        }
+        [HttpGet("Search")]
+        public async Task<ActionResult<ApiResult<Pagination<OrderResponse>>>> Search(string name, int pageIndex = 0, int pageSize = 10)
+        {
+            var response = await _orderService.Search(name, pageIndex, pageSize);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest();
+            return Ok(response);
+        }
     }
 }

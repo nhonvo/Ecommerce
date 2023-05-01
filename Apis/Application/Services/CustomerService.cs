@@ -162,6 +162,7 @@ namespace Infrastructures.Services
                 return new ApiErrorResult<OrderResponse>("Can't add the order", new List<string> { ex.ToString() });
             }
         }
+        // FIXME: test
         public async Task<ApiResult<OrderResponse>> UpdateOrder(Guid id, Guid orderId, UpdateCustomerOrder request)
         {
             var order = await _unitOfWork.OrderRepository.FirstOrdDefaultAsync(
@@ -182,6 +183,7 @@ namespace Infrastructures.Services
             }
             throw new NotImplementedException();
         }
+        // FIXME: test
         public async Task<ApiResult<OrderResponse>> DeleteOrder(Guid id, Guid orderId)
         {
             var order = await _unitOfWork.OrderRepository.FirstOrdDefaultAsync(
@@ -198,11 +200,22 @@ namespace Infrastructures.Services
                 _unitOfWork.Rollback();
                 return new ApiErrorResult<OrderResponse>("Can't delete customer", new List<string> { ex.ToString() });
             }
-            throw new NotImplementedException();
         }
         #endregion
-        #region Customer OrderDetail
-
-        #endregion
+        public async Task<ApiResult<Pagination<CustomerResponse>>> Search(string search, int pageIndex, int pageSize)
+        {
+            var customers = await _unitOfWork.CustomerRepository.GetAsync(
+                filter: x => x.Name.Contains(search)
+                             || x.Email.Contains(search)
+                             || x.Phone.Contains(search)
+                             || x.Address.Contains(search),
+                pageIndex: pageIndex,
+                pageSize: pageSize
+            );
+            var result = _mapper.Map<Pagination<CustomerResponse>>(customers);
+            if (result == null)
+                return new ApiErrorResult<Pagination<CustomerResponse>>("Can't get customer");
+            return new ApiSuccessResult<Pagination<CustomerResponse>>(result);
+        }
     }
 }

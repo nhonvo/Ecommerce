@@ -22,6 +22,6 @@ namespace Application.Interfaces
         Task<ApiResult<OrderResponse>> AddOrder(Guid id);
         Task<ApiResult<OrderResponse>> UpdateOrder(Guid id, Guid orderId, UpdateCustomerOrder request);
         Task<ApiResult<OrderResponse>> DeleteOrder(Guid id, Guid orderId);
-
+        Task<ApiResult<Pagination<CustomerResponse>>> Search(string search, int pageIndex, int pageSize);
     }
 }

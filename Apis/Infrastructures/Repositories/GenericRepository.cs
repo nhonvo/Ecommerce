@@ -153,7 +153,9 @@ namespace Infrastructures.Repositories
 
         public async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter) => await _dbSet.Where(filter).ToListAsync();
 
-        public async Task<Pagination<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter, int pageIndex = 0, int pageSize = 10)
+        public async Task<Pagination<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter,
+                                                        int pageIndex = 0,
+                                                        int pageSize = 10)
         {
             var itemCount = await _dbSet.CountAsync();
             var items = await _dbSet.Where(filter)

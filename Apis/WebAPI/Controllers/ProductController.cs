@@ -39,6 +39,14 @@ namespace WebAPI.Controllers
                 return BadRequest();
             return Ok(response);
         }
+        [HttpGet("Search")]
+        public async Task<ActionResult<ApiResult<Pagination<ProductResponse>>>> Search(string name, int pageIndex = 0, int pageSize = 10)
+        {
+            var response = await _productService.Search(name, pageIndex, pageSize);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest();
+            return Ok(response);
+        }
 
         [HttpPost]
         public async Task<ActionResult<ApiResult<ProductResponse>>> Post([FromBody] CreateProduct request)
