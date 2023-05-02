@@ -33,9 +33,7 @@ namespace Infrastructures.Services
             try
             {
                 await _unitOfWork.ExecuteTransactionAsync(() => _unitOfWork.ProductRepository.AddAsync(product));
-                // _unitOfWork.BeginTransaction();
-                // await _unitOfWork.ProductRepository.AddAsync(product);
-                // await _unitOfWork.CommitAsync();
+
                 var result = _mapper.Map<ProductResponse>(product);
 
                 return new ApiSuccessResult<ProductResponse>(result);
@@ -56,15 +54,15 @@ namespace Infrastructures.Services
 
             try
             {
-                _unitOfWork.BeginTransaction();
-                _unitOfWork.ProductRepository.Update(product);
-                await _unitOfWork.CommitAsync();
+                await _unitOfWork.ExecuteTransactionAsync(() =>
+                {
+                    _unitOfWork.ProductRepository.Update(product);
+                });
                 var result = _mapper.Map<ProductResponse>(product);
                 return new ApiSuccessResult<ProductResponse>(result);
             }
             catch (Exception ex)
             {
-                _unitOfWork.Rollback();
                 return new ApiErrorResult<ProductResponse>("Can't update product", new List<string> { ex.ToString() });
             }
         }
@@ -78,9 +76,6 @@ namespace Infrastructures.Services
             {
                 await _unitOfWork.ExecuteTransactionAsync(() => _unitOfWork.ProductRepository.Delete(product));
 
-                // _unitOfWork.BeginTransaction();
-                // _unitOfWork.ProductRepository.Delete(product);
-                // await _unitOfWork.CommitAsync();
                 var result = _mapper.Map<ProductResponse>(product);
                 return new ApiSuccessResult<ProductResponse>(result);
             }

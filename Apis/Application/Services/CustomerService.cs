@@ -79,9 +79,6 @@ namespace Infrastructures.Services
             {
                 await _unitOfWork.ExecuteTransactionAsync(() => _unitOfWork.CustomerRepository.Delete(customer));
 
-                // _unitOfWork.BeginTransaction();
-                // _unitOfWork.CustomerRepository.Delete(customer);
-                // await _unitOfWork.CommitAsync();
                 var result = _mapper.Map<CustomerResponse>(customer);
                 return new ApiSuccessResult<CustomerResponse>(result);
             }
@@ -134,7 +131,6 @@ namespace Infrastructures.Services
                 return new ApiErrorResult<Pagination<CustomerResponse>>("Not found the order");
             return new ApiSuccessResult<Pagination<CustomerResponse>>(result);
         }
-        // TODO: OPTIMIZE enter list orderDetail
         public async Task<ApiResult<OrderResponse>> AddOrder(Guid id)
         {
             var order = new Order();
@@ -162,14 +158,17 @@ namespace Infrastructures.Services
                 return new ApiErrorResult<OrderResponse>("Can't add the order", new List<string> { ex.ToString() });
             }
         }
-        // FIXME: test
         public async Task<ApiResult<OrderResponse>> UpdateOrder(Guid id, Guid orderId, UpdateCustomerOrder request)
         {
             var order = await _unitOfWork.OrderRepository.FirstOrdDefaultAsync(
                 filter: x => x.Id == orderId && x.Customer.Id == id
             );
+            if (order == null)
+                return new ApiErrorResult<OrderResponse>("Can't order or customer not found");
+
             var updateOrder = _mapper.Map<Order>(request);
-            order = updateOrder;
+            order.OrderDate = updateOrder.OrderDate;
+            order.TotalAmount = updateOrder.TotalAmount;
             try
             {
                 await _unitOfWork.ExecuteTransactionAsync(() => { _unitOfWork.OrderRepository.Update(order); });
@@ -181,9 +180,7 @@ namespace Infrastructures.Services
                 _unitOfWork.Rollback();
                 return new ApiErrorResult<OrderResponse>("Can't update customer", new List<string> { ex.ToString() });
             }
-            throw new NotImplementedException();
         }
-        // FIXME: test
         public async Task<ApiResult<OrderResponse>> DeleteOrder(Guid id, Guid orderId)
         {
             var order = await _unitOfWork.OrderRepository.FirstOrdDefaultAsync(
@@ -242,7 +239,6 @@ namespace Infrastructures.Services
                 Items = orderDetailResponses,
             });
         }
-
         #endregion
     }
 }

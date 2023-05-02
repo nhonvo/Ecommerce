@@ -93,15 +93,15 @@ namespace Infrastructures.Services
 
             try
             {
-                _unitOfWork.BeginTransaction();
-                _unitOfWork.OrderRepository.Update(order);
-                await _unitOfWork.CommitAsync();
+                await _unitOfWork.ExecuteTransactionAsync(() =>
+                {
+                    _unitOfWork.OrderRepository.Update(order);
+                });
                 var result = _mapper.Map<OrderResponse>(order);
                 return new ApiSuccessResult<OrderResponse>(result);
             }
             catch (Exception ex)
             {
-                _unitOfWork.Rollback();
                 return new ApiErrorResult<OrderResponse>(
                     "Can't update order",
                     new List<string> { ex.ToString() });
@@ -117,9 +117,7 @@ namespace Infrastructures.Services
             {
                 await _unitOfWork.ExecuteTransactionAsync(() => _unitOfWork.OrderRepository.Delete(order));
 
-                // _unitOfWork.BeginTransaction();
-                // _unitOfWork.OrderRepository.Delete(order);
-                // await _unitOfWork.CommitAsync();
+
                 var result = _mapper.Map<OrderResponse>(order);
                 return new ApiSuccessResult<OrderResponse>(result);
             }

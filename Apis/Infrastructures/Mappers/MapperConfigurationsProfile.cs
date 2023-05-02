@@ -1,6 +1,7 @@
 ﻿using Application.Commons;
 using Application.ViewModels.Customer;
 using Application.ViewModels.Order;
+using Application.ViewModels.OrderDetails;
 using Application.ViewModels.Product;
 using Application.ViewModels.UserViewModels;
 using AutoMapper;
@@ -25,6 +26,7 @@ namespace Infrastructures.Mappers
             CreateMap<CreateCustomer, Customer>().ReverseMap();
             CreateMap<UpdateCustomer, Customer>().ReverseMap();
             CreateMap<CustomerOrder, Order>().ReverseMap();
+            CreateMap<UpdateCustomerOrder, Order>().ReverseMap();
 
 
             // Order
@@ -32,6 +34,7 @@ namespace Infrastructures.Mappers
             CreateMap<CreateOrder, Order>().ReverseMap();
             CreateMap<UpdateOrder, Order>().ReverseMap();
             CreateMap<OrderDetails, OrderDetail>().ReverseMap();
+            CreateMap<UpdateOrderDetail, OrderDetail>().ReverseMap();
 
             // Product
             CreateMap<Product, ProductResponse>().ReverseMap();

@@ -16,8 +16,17 @@ namespace Application.ViewModels.Order
     }
     public class SalesReport
     {
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public decimal TotalSales { get; set; }
+        public List<DailySales> DailySales { get; set; }
+    }
+
+    public class DailySales
+    {
         public DateTime Date { get; set; }
         public decimal TotalSales { get; set; }
     }
-
 }
