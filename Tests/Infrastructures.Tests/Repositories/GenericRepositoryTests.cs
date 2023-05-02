@@ -156,7 +156,10 @@ namespace Infrastructures.Tests.Repositories
             await _dbContext.SaveChangesAsync();
 
 
-            var paginasion = await _genericRepository.ToPagination();
+            var paginasion = await _genericRepository.ToPagination(
+                pageIndex: 0,
+                pageSize: 10
+            );
 
 
             paginasion.Previous.Should().BeFalse();

@@ -24,6 +24,7 @@ namespace Infrastructures.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        #region customer
         public async Task<ApiResult<Pagination<CustomerResponse>>> GetAsync(int pageIndex, int pageSize)
         {
             var result = await _unitOfWork.CustomerRepository.ToPagination(pageIndex, pageSize);
@@ -120,6 +121,7 @@ namespace Infrastructures.Services
 
             return totalPrice;
         }
+        #endregion
         #region  customer and order
         public async Task<ApiResult<Pagination<CustomerResponse>>> GetOrder(Guid Id, int pageIndex, int pageSize)
         {
@@ -217,5 +219,32 @@ namespace Infrastructures.Services
                 return new ApiErrorResult<Pagination<CustomerResponse>>("Can't get customer");
             return new ApiSuccessResult<Pagination<CustomerResponse>>(result);
         }
+        #region View customer orders with product details
+        public async Task<ApiResult<Pagination<OrderDetails>>> GetCustomerOrderDetailsAsync(Guid customerId, int pageIndex = 0, int pageSize = 10)
+        {
+            var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(customerId);
+            if (customer == null)
+                return new ApiErrorResult<Pagination<OrderDetails>>($"Customer with ID {customerId} not found.");
+
+            var orders = await _unitOfWork.OrderRepository.GetAsync(
+                filter: o => o.CustomerId == customerId,
+                include: o => o.Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.Product),
+                pageIndex: pageIndex,
+                pageSize: pageSize);
+
+            var orderDetails = orders.Items.SelectMany(o => o.OrderDetails).ToList();
+            var orderDetailResponses = _mapper.Map<List<OrderDetails>>(orderDetails);
+
+            return new ApiSuccessResult<Pagination<OrderDetails>>(new Pagination<OrderDetails>
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                TotalItemsCount = orders.TotalItemsCount,
+                Items = orderDetailResponses,
+            });
+        }
+
+        #endregion
     }
 }

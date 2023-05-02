@@ -47,13 +47,18 @@ namespace Application.Repositories
         /// <param name="include">Include this entity in the result ( optional )</param>
         /// <param name="pageIndex">Index of the page ( optional ).</param>
         /// <param name="pageSize">Size of the page ( optional ). Default is 10</param>
-        Task<Pagination<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null, int pageIndex = 0, int pageSize = 10);
-        Task<Pagination<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,
-                                                             Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null,
-                                                             int pageIndex = 0,
-                                                             int pageSize = 10,
-                                                             Expression<Func<TEntity, object>> sortColumn = null,
-                                                             SortDirection sortDirection = SortDirection.Descending);
+        Task<Pagination<TEntity>> GetAsync(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null,
+            int pageIndex = 0,
+            int pageSize = 10);
+        Task<Pagination<TEntity>> GetAsync(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null,
+            int pageIndex = 0,
+            int pageSize = 10,
+            Expression<Func<TEntity, object>> sortColumn = null,
+            SortDirection sortDirection = SortDirection.Descending);
         /// <summary>
         /// Get entities by filter. This is an asynchronous operation. If you want to wait for the result use GetAsync ( Expression. Of ( TEntity ))
         /// </summary>
@@ -65,13 +70,18 @@ namespace Application.Repositories
         /// <param name="filter">Expression that determines which entities to get</param>
         /// <param name="pageIndex">Index of page to start retrieving from.</param>
         /// <param name="pageSize">Size of page to retrieve from the API ( default 10</param>
-        Task<Pagination<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter, int pageIndex = 0, int pageSize = 10);
+        Task<Pagination<TEntity>> GetAsync(
+            Expression<Func<TEntity, bool>> filter,
+            int pageIndex = 0,
+            int pageSize = 10);
         /// <summary>
         /// Converts the data to a pagination. Used to get the list of entities that have been added to the data store
         /// </summary>
-        /// <param name="pageNumber">The page number to start from.</param>
+        /// <param name="pageIndex">The page number to start from.</param>
         /// <param name="pageSize">The page size to start from ( default 10</param>
-        Task<Pagination<TEntity>> ToPagination(int pageNumber = 0, int pageSize = 10);
+        Task<Pagination<TEntity>> ToPagination(
+            int pageIndex = 0,
+            int pageSize = 10);
         /// <summary>
         /// Updates the entity in the database. This is called when an entity is updated and should be used to make changes to the data source.
         /// </summary>

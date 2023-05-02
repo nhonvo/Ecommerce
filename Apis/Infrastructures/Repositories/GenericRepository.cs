@@ -20,24 +20,8 @@ namespace Infrastructures.Repositories
             _timeService = timeService;
             _claimsService = claimsService;
         }
-        // create
-        public async Task AddAsync(TEntity entity)
-        {
-            entity.CreationDate = _timeService.GetCurrentTime();
-            entity.CreatedBy = _claimsService.CurrentUserId;
-            await _dbSet.AddAsync(entity);
-        }
 
-        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
-        {
-            foreach (var entity in entities)
-            {
-                entity.CreationDate = _timeService.GetCurrentTime();
-                entity.CreatedBy = _claimsService.CurrentUserId;
-            }
-            await _dbSet.AddRangeAsync(entities);
-        }
-        // Read
+        #region read
         public async Task<Pagination<TEntity>> ToPagination(int pageIndex = 0, int pageSize = 10)
         {
             var itemCount = await _dbSet.CountAsync();
@@ -57,20 +41,12 @@ namespace Infrastructures.Repositories
 
             return result;
         }
-
-        public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter) => await _dbSet.AnyAsync(filter);
-        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> filter)
-        {
-            if (filter == null)
-                return await _dbSet.CountAsync();
-            return await _dbSet.CountAsync(filter);
-        }
-        public async Task<int> CountAsync() => await _dbSet.CountAsync();
         public async Task<TEntity> GetByIdAsync(object id) => await _dbSet.FindAsync(id);
-        public async Task<Pagination<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,
-                                                        Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null,
-                                                        int pageIndex = 0,
-                                                        int pageSize = 10)
+        public async Task<Pagination<TEntity>> GetAsync(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null,
+            int pageIndex = 0,
+            int pageSize = 10)
         {
             var query = _dbSet.AsQueryable();
 
@@ -103,11 +79,11 @@ namespace Infrastructures.Repositories
         }
 
         public async Task<Pagination<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,
-                                                        Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null,
-                                                        int pageIndex = 0,
-                                                        int pageSize = 10,
-                                                        Expression<Func<TEntity, object>> sortColumn = null,
-                                                        SortDirection sortDirection = SortDirection.Descending)
+            Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null,
+            int pageIndex = 0,
+            int pageSize = 10,
+            Expression<Func<TEntity, object>> sortColumn = null,
+            SortDirection sortDirection = SortDirection.Descending)
         {
             var query = _dbSet.AsQueryable();
 
@@ -151,7 +127,8 @@ namespace Infrastructures.Repositories
             return result;
         }
 
-        public async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter) => await _dbSet.Where(filter).ToListAsync();
+        public async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter)
+            => await _dbSet.Where(filter).ToListAsync();
 
         public async Task<Pagination<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter,
                                                         int pageIndex = 0,
@@ -175,7 +152,55 @@ namespace Infrastructures.Repositories
 
             return result;
         }
-        // Update
+        public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter)
+           => await _dbSet.IgnoreQueryFilters()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(filter);
+
+        public async Task<TEntity> FirstOrdDefaultAsync(Expression<Func<TEntity, bool>> filter,
+            Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null)
+        {
+            IQueryable<TEntity> query = _dbSet.AsNoTracking();
+
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            return await query.FirstOrDefaultAsync(filter);
+        }
+
+
+        public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter)
+            => await _dbSet.AnyAsync(filter);
+        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> filter)
+        {
+            if (filter == null)
+                return await _dbSet.CountAsync();
+            return await _dbSet.CountAsync(filter);
+        }
+
+        public async Task<int> CountAsync() => await _dbSet.CountAsync();
+        #endregion
+        #region create
+        public async Task AddAsync(TEntity entity)
+        {
+            entity.CreationDate = _timeService.GetCurrentTime();
+            entity.CreatedBy = _claimsService.CurrentUserId;
+            await _dbSet.AddAsync(entity);
+        }
+
+        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+        {
+            foreach (var entity in entities)
+            {
+                entity.CreationDate = _timeService.GetCurrentTime();
+                entity.CreatedBy = _claimsService.CurrentUserId;
+            }
+            await _dbSet.AddRangeAsync(entities);
+        }
+        #endregion
+        #region update
         public void Update(TEntity entity)
         {
             entity.ModificationDate = _timeService.GetCurrentTime();
@@ -192,7 +217,8 @@ namespace Infrastructures.Repositories
             }
             _dbSet.UpdateRange(entities);
         }
-        // delete
+        #endregion
+        #region delete
         public void Delete(TEntity entity)
         {
             entity.DeletionDate = _timeService.GetCurrentTime();
@@ -232,21 +258,6 @@ namespace Infrastructures.Repositories
             }
             _dbSet.UpdateRange(entities);
         }
-        public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter)
-            => await _dbSet.IgnoreQueryFilters().AsNoTracking().FirstOrDefaultAsync(filter);
-
-        public async Task<TEntity> FirstOrdDefaultAsync(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null)
-        {
-            IQueryable<TEntity> query = _dbSet.AsNoTracking();
-
-            if (include != null)
-            {
-                query = include(query);
-            }
-
-            return await query.FirstOrDefaultAsync(filter);
-        }
-
-
+        #endregion
     }
 }

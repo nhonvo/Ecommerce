@@ -5,16 +5,14 @@ using Application.Interfaces;
 
 namespace WebAPI.Tests.Controllers
 {
-    public class BookControllerTests : SetupTest
+    public class ProductControllerTests : SetupTest
     {
-        private readonly BookController _bookController;
-        private Mock<IBookService> _bookService;
-        public BookControllerTests()
+        private readonly ProductController _productController;
+        private Mock<IProductService> _productService;
+        public ProductControllerTests()
         {
-            _bookController = new BookController(_bookService.Object);
-        }
-
-       
+            _productController = new ProductController(_productService.Object);
+        }  
 
     }
 }

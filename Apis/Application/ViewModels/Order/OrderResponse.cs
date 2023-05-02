@@ -16,4 +16,10 @@ namespace Application.ViewModels.Order
         public Guid ProductId { get; set; }
         public int Quantity { get; set; }
     }
+    public class SalesReport
+    {
+        public DateTime Date { get; set; }
+        public decimal TotalSales { get; set; }
+    }
+
 }
