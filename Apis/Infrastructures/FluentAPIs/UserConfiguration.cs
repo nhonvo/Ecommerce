@@ -17,7 +17,7 @@ namespace Infrastructures.FluentAPIs
 
             builder.Property(x => x.Email).HasMaxLength(100);
 
-         
+
             builder.HasData(
                 new User
                 {

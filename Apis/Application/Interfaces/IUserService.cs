@@ -1,6 +1,5 @@
 ﻿using Application.ViewModels.UserViewModels;
 using Domain.Aggregate.AppResult;
-using Domain.Entities;
 
 namespace Application.Interfaces
 {

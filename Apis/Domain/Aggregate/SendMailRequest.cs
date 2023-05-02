@@ -15,7 +15,7 @@ namespace Domain.Aggregate
     {
         public string subject { get; set; } = "Message from Book Store";
         public Body body { get; set; } = new Body();
-        public List<ToRecipient> toRecipients { get; set; } = new List<ToRecipient>{};
+        public List<ToRecipient> toRecipients { get; set; } = new List<ToRecipient> { };
     }
 
     public class SendMailRequest

@@ -39,15 +39,15 @@ namespace WebAPI
             // customer
             services.AddScoped<IValidator<CreateCustomer>, CreateCustomerValidation>();
             services.AddScoped<IValidator<UpdateCustomer>, UpdateCustomerValidation>();
-            
+
             // order
             services.AddScoped<IValidator<CreateOrder>, CreateOrderValidation>();
             services.AddScoped<IValidator<UpdateOrder>, UpdateOrderValidation>();
-            
+
             // product
             services.AddScoped<IValidator<CreateProduct>, CreateProductValidation>();
             services.AddScoped<IValidator<UpdateProduct>, UpdateProductValidation>();
-            
+
             #endregion
             // JWT
             services.AddAuthentication(options =>

@@ -1,5 +1,3 @@
-using Domain.Enums;
-
 namespace Application.ViewModels.Order
 {
     public class OrderResponse

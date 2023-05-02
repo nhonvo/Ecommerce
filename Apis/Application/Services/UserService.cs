@@ -1,9 +1,9 @@
 ﻿using Application;
 using Application.Interfaces;
+using Application.ViewModels.UserViewModels;
 using AutoMapper;
 using Domain.Aggregate.AppResult;
 using Domain.Entities;
-using Application.ViewModels.UserViewModels;
 
 namespace Infrastructures.Services
 {

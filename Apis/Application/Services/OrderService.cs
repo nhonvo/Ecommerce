@@ -5,11 +5,9 @@ using Application.ViewModels.Order;
 using Application.ViewModels.OrderDetails;
 using Application.ViewModels.Product;
 using AutoMapper;
-using Domain.Aggregate;
 using Domain.Aggregate.AppResult;
 using Domain.Entities;
 using Domain.Enums;
-using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 namespace Infrastructures.Services
 {

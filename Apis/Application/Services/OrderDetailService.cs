@@ -1,8 +1,6 @@
 using Application;
 using Application.Interfaces;
-using Application.ViewModels.Order;
 using AutoMapper;
-using Domain.Interfaces;
 
 namespace Infrastructures.Services
 {

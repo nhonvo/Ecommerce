@@ -4,7 +4,6 @@ using Application.Services;
 using FluentAssertions;
 using Infrastructures;
 using Infrastructures.Repositories;
-using Infrastructures.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

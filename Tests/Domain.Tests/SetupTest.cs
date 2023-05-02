@@ -5,7 +5,6 @@ using AutoFixture;
 using AutoMapper;
 using Infrastructures;
 using Infrastructures.Mappers;
-using Infrastructures.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 
@@ -23,7 +22,7 @@ namespace Domain.Tests
         protected readonly Mock<IOrderRepository> _orderRepository;
         protected readonly Mock<IOrderDetailRepository> _orderDetailRepository;
         protected readonly Mock<IProductRepository> _productRepository;
-       
+
         protected readonly Mock<IUserRepository> _userRepository;
         protected readonly ApplicationDbContext _dbContext;
 

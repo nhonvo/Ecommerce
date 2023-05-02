@@ -17,6 +17,6 @@ namespace Domain.Entities
         public string? Address { get; set; }
         public decimal CreditBalance { get; set; } = 0;
         public Role Role { get; set; } = Role.User;
-      
+
     }
 }

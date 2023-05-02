@@ -1,12 +1,8 @@
-using Application.Interfaces;
 using Application.Commons;
 using Application.Interfaces;
-using Application.ViewModels.Customer;
-using Domain.Aggregate.AppResult;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Application.ViewModels.Order;
 using Application.ViewModels.Product;
+using Domain.Aggregate.AppResult;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace WebAPI.Controllers

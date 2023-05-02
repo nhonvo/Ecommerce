@@ -1,8 +1,6 @@
-using System.Text.RegularExpressions;
-using Application.ViewModels.Book;
 using Application.ViewModels.Customer;
-using Domain.Entities;
 using FluentValidation;
+using System.Text.RegularExpressions;
 
 namespace WebAPI.Validations
 {

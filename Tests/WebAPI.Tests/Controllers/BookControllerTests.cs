@@ -1,7 +1,7 @@
-﻿using Domain.Tests;
+﻿using Application.Interfaces;
+using Domain.Tests;
 using Moq;
 using WebAPI.Controllers;
-using Application.Interfaces;
 
 namespace WebAPI.Tests.Controllers
 {
@@ -12,7 +12,7 @@ namespace WebAPI.Tests.Controllers
         public ProductControllerTests()
         {
             _productController = new ProductController(_productService.Object);
-        }  
+        }
 
     }
 }

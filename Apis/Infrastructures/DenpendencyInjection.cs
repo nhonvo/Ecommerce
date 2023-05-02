@@ -2,7 +2,6 @@
 using Application.Interfaces;
 using Application.Repositories;
 using Application.Services;
-using Domain.Interfaces;
 using Infrastructures.Mappers;
 using Infrastructures.Repositories;
 using Infrastructures.Services;
@@ -26,23 +25,23 @@ namespace Infrastructures
 
             // Book
             services.AddScoped<IBookRepository, BookRepository>();
-         
+
             // Customer
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
-         
+
             // Product
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductService, ProductService>();
-         
+
             // Order
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderService, OrderService>();
-         
+
             // OrderDetail
             services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
             services.AddScoped<IOrderDetailService, OrderDetailService>();
-         
+
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<ICurrentTime, CurrentTime>();

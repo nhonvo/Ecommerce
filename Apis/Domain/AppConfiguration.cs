@@ -7,7 +7,7 @@
         public BaseUrl BaseUrl { get; set; }
     }
 
-  
+
     public class ConnectionStrings
     {
         public string DatabaseConnection { get; set; }

@@ -1,7 +1,6 @@
-﻿using System.Reflection;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
+using System.Reflection;
 
 namespace Infrastructures
 {

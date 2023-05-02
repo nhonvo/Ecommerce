@@ -1,8 +1,4 @@
 using Application.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using Application.ViewModels.UserViewModels;
-using Domain.Aggregate.AppResult;
-using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {

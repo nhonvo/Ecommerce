@@ -4,10 +4,8 @@ using Application.Interfaces;
 using Application.ViewModels.Customer;
 using Application.ViewModels.Order;
 using AutoMapper;
-using Domain.Aggregate;
 using Domain.Aggregate.AppResult;
 using Domain.Entities;
-using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructures.Services

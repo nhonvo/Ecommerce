@@ -1,9 +1,4 @@
-using Application.Commons;
 using Application.Interfaces;
-using Application.ViewModels.Order;
-using Domain.Aggregate.AppResult;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {

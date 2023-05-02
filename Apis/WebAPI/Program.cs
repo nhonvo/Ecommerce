@@ -1,7 +1,7 @@
-using Infrastructures;
-using WebAPI.Middlewares;
-using WebAPI;
 using Domain;
+using Infrastructures;
+using WebAPI;
+using WebAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 

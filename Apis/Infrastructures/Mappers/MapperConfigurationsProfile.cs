@@ -1,10 +1,10 @@
-﻿using AutoMapper;
-using Application.Commons;
-using Domain.Entities;
-using Application.ViewModels.UserViewModels;
+﻿using Application.Commons;
 using Application.ViewModels.Customer;
 using Application.ViewModels.Order;
 using Application.ViewModels.Product;
+using Application.ViewModels.UserViewModels;
+using AutoMapper;
+using Domain.Entities;
 
 namespace Infrastructures.Mappers
 {

@@ -1,10 +1,10 @@
-﻿using Application.Interfaces;
+﻿using Application.Commons;
+using Application.Interfaces;
 using Application.Repositories;
-using Application.Commons;
 using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using Domain.Enums;
 
 namespace Infrastructures.Repositories
 {

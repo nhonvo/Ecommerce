@@ -1,6 +1,6 @@
-using System.Text.RegularExpressions;
 using Application.ViewModels.Customer;
 using FluentValidation;
+using System.Text.RegularExpressions;
 
 namespace WebAPI.Validations
 {
