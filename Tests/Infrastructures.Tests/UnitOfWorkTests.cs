@@ -10,7 +10,6 @@ namespace Infrastructures.Tests
         {
             _unitOfWork = new UnitOfWork(_dbContext,
                                          _userRepository.Object,
-                                         _bookRepository.Object,
                                          _customerRepository.Object,
                                          _productRepository.Object,
                                          _orderRepository.Object,

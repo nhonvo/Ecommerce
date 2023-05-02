@@ -17,7 +17,6 @@ namespace Domain.Tests
         protected readonly Mock<IUnitOfWork> _unitOfWorkMock;
         protected readonly Mock<IClaimsService> _claimsServiceMock;
         protected readonly Mock<ICurrentTime> _currentTimeMock;
-        protected readonly Mock<IBookRepository> _bookRepository;
         protected readonly Mock<ICustomerRepository> _customerRepository;
         protected readonly Mock<IOrderRepository> _orderRepository;
         protected readonly Mock<IOrderDetailRepository> _orderDetailRepository;

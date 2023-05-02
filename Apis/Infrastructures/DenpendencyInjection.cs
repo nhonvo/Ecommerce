@@ -22,10 +22,6 @@ namespace Infrastructures
 
             services.AddScoped<IJWTService, JWTService>();
 
-
-            // Book
-            services.AddScoped<IBookRepository, BookRepository>();
-
             // Customer
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerService, CustomerService>();

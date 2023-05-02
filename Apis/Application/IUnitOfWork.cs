@@ -30,7 +30,6 @@ namespace Application
         /// </summary>
         void Rollback();
         public IUserRepository UserRepository { get; }
-        public IBookRepository BookRepository { get; }
         public IProductRepository ProductRepository { get; }
         public ICustomerRepository CustomerRepository { get; }
         public IOrderRepository OrderRepository { get; }

@@ -38,7 +38,7 @@ namespace Infrastructures.Services
 
             foreach (var item in orderDetails)
             {
-                var product = await _unitOfWork.BookRepository.FirstOrDefaultAsync(x => x.Id == item.ProductId);
+                var product = await _unitOfWork.ProductRepository.FirstOrDefaultAsync(x => x.Id == item.ProductId);
                 /// if product is not found for this ProductId
                 if (product == null)
                 {

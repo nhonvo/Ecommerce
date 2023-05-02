@@ -8,7 +8,8 @@ namespace Application.Repositories
     public interface IGenericRepository<TEntity> where TEntity : BaseEntity
     {
         /// <summary>
-        /// Adds the specified entity to the repository asynchronously. This method is called when the user clicks the Add button in the form.
+        /// Adds the specified entity to the repository asynchronously. This method is called 
+        /// when the user clicks the Add button in the form.
         /// </summary>
         /// <param name="entity">The entity to add to the repository as an asynchronous operation</param>
         Task AddAsync(TEntity entity);
@@ -41,12 +42,14 @@ namespace Application.Repositories
         /// <param name="id">The id of the</param>
         Task<TEntity> GetByIdAsync(object id);
         /// <summary>
-        /// Gets a paged list of entities. You can use this method to paginate through a list of entities that match a filter and / or include the entity by id or name
+        /// Gets a paged list of entities. You can use this method to paginate through a list of 
+        /// entities that match a filter and / or include the entity by id or name
         /// </summary>
         /// <param name="filter">Expression that determines which entities to return</param>
         /// <param name="include">Include this entity in the result ( optional )</param>
         /// <param name="pageIndex">Index of the page ( optional ).</param>
         /// <param name="pageSize">Size of the page ( optional ). Default is 10</param>
+        // TODO:TEST method add nullable operator ?
         Task<Pagination<TEntity>> GetAsync(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null,
@@ -60,7 +63,8 @@ namespace Application.Repositories
             Expression<Func<TEntity, object>> sortColumn = null,
             SortDirection sortDirection = SortDirection.Descending);
         /// <summary>
-        /// Get entities by filter. This is an asynchronous operation. If you want to wait for the result use GetAsync ( Expression. Of ( TEntity ))
+        /// Get entities by filter. This is an asynchronous operation. If you want to wait for 
+        /// the result use GetAsync ( Expression. Of ( TEntity ))
         /// </summary>
         /// <param name="filter">Expression to filter entities by. Can be null</param>
         Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter);
@@ -83,9 +87,11 @@ namespace Application.Repositories
             int pageIndex = 0,
             int pageSize = 10);
         /// <summary>
-        /// Updates the entity in the database. This is called when an entity is updated and should be used to make changes to the data source.
+        /// Updates the entity in the database. This is called when an entity is updated 
+        /// and should be used to make changes to the data source.
         /// </summary>
-        /// <param name="entity">The entity to update in the database. This can be a new entity or a part of an existing</param>
+        /// <param name="entity">The entity to update in the database. This can be a new 
+        /// entity or a part of an existing</param>
         void Update(TEntity entity);
 
         /// <summary>
@@ -95,21 +101,25 @@ namespace Application.Repositories
         void UpdateRange(IEnumerable<TEntity> entities);
 
         /// <summary>
-        /// Deletes the specified entity. This is an asynchronous operation. To wait for the operation to complete call GetOperationStatus
+        /// Deletes the specified entity. This is an asynchronous operation. To wait for 
+        /// the operation to complete call GetOperationStatus
         /// </summary>
         /// <param name="entity">The entity to delete</param>
         void Delete(TEntity entity);
 
         /// <summary>
-        /// Deletes a range of entities from the repository. This is useful for deleting entities that are no longer needed and can be reinserted in the database
+        /// Deletes a range of entities from the repository. This is useful for deleting 
+        /// entities that are no longer needed and can be reinserted in the database
         /// </summary>
         /// <param name="entities">The entities to delete</param>
         void DeleteRange(IEnumerable<TEntity> entities);
 
         /// <summary>
-        /// Deletes the object with the specified identifier. This is an asynchronous operation. A task will return before the object has been deleted.
+        /// Deletes the object with the specified identifier. This is an asynchronous operation.
+        ///  A task will return before the object has been deleted.
         /// </summary>
-        /// <param name="id">The identifier of the object to delete. This can be a for the current thread or a for a sub - thread</param>
+        /// <param name="id">The identifier of the object to delete. This can be a 
+        /// for the current thread or a for a sub - thread</param>
         Task Delete(object id);
         /// <summary>
         /// Removes the specified entity from the repository. This is useful for entities that are no longer part of the repository.
@@ -126,7 +136,9 @@ namespace Application.Repositories
         /// </summary>
         /// <param name="filter">The filter to match entities by. Cannot be null</param>
         Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter);
-        Task<TEntity> FirstOrdDefaultAsync(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null);
+        Task<TEntity> FirstOrdDefaultAsync(
+            Expression<Func<TEntity, bool>> filter,
+            Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null);
 
     }
 }

@@ -1,4 +1,4 @@
-﻿using Application.ViewModels.Book;
+﻿using Application.ViewModels.Product;
 using AutoFixture;
 using Domain.Entities;
 using Domain.Tests;
@@ -12,13 +12,13 @@ namespace Infrastructures.Tests.Mappers
         public void TestMapper()
         {
             //arrange
-            var bookMock = _fixture.Build<Product>().Create();
+            var productMock = _fixture.Build<Product>().Create();
 
             //act
-            var result = _mapperConfig.Map<BookResponse>(bookMock);
+            var result = _mapperConfig.Map<ProductResponse>(productMock);
 
             //assert
-            result.Id.Should().Be(bookMock.Id.ToString());
+            result.Id.Should().Be(productMock.Id.ToString());
         }
     }
 }

@@ -38,15 +38,12 @@ namespace WebAPI.Tests
             var exceptionMiddlewareResolved = _serviceProvider.GetRequiredService<GlobalExceptionMiddleware>();
             var performanceMiddleware = _serviceProvider.GetRequiredService<PerformanceMiddleware>();
             var stopwatchResolved = _serviceProvider.GetRequiredService<Stopwatch>();
-            var bookServiceResolved = _serviceProvider.GetRequiredService<IBookService>();
-            var bookRepositoryResolved = _serviceProvider.GetRequiredService<IBookRepository>();
 
             currentTimeServiceResolved.GetType().Should().Be(typeof(CurrentTime));
             claimsServiceServiceResolved.GetType().Should().Be(typeof(ClaimsService));
             exceptionMiddlewareResolved.GetType().Should().Be(typeof(GlobalExceptionMiddleware));
             performanceMiddleware.GetType().Should().Be(typeof(PerformanceMiddleware));
             stopwatchResolved.GetType().Should().Be(typeof(Stopwatch));
-            bookRepositoryResolved.GetType().Should().Be(typeof(BookRepository));
         }
     }
 }

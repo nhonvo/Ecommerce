@@ -8,7 +8,6 @@ namespace Infrastructures
     {
         private readonly ApplicationDbContext _context;
         private readonly IUserRepository _userRepository;
-        private readonly IBookRepository _bookRepository;
         private readonly ICustomerRepository _customerRepository;
         private readonly IProductRepository _productRepository;
         private readonly IOrderRepository _orderRepository;
@@ -20,7 +19,6 @@ namespace Infrastructures
 
         public UnitOfWork(ApplicationDbContext dbContext,
                           IUserRepository userRepository,
-                          IBookRepository bookRepository,
                           ICustomerRepository customerRepository,
                           IProductRepository productRepository,
                           IOrderRepository orderRepository,
@@ -29,7 +27,6 @@ namespace Infrastructures
         {
             _context = dbContext;
             _userRepository = userRepository;
-            _bookRepository = bookRepository;
             _customerRepository = customerRepository;
             _productRepository = productRepository;
             _orderRepository = orderRepository;
@@ -38,7 +35,6 @@ namespace Infrastructures
         }
 
         public IUserRepository UserRepository => _userRepository;
-        public IBookRepository BookRepository => _bookRepository;
         public IProductRepository ProductRepository => _productRepository;
         public ICustomerRepository CustomerRepository => _customerRepository;
         public IOrderRepository OrderRepository => _orderRepository;
