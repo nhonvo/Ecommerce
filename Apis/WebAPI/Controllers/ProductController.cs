@@ -15,16 +15,13 @@ namespace WebAPI.Controllers
         {
             _productService = productService;
         }
-        // TODO: fix the name of endpoint
-        // TODO: refactor project delete book, remove unuse using
         // TODO: write unit test.
-        // TODO: fix the response of controller the status code
         [HttpGet("{id}")]
         public async Task<ActionResult<ApiResult<ProductResponse>>> Get(Guid id)
         {
             var response = await _productService.Get(id);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
-                return BadRequest();
+                return BadRequest(response);
             return Ok(response);
         }
         [HttpGet]
@@ -32,7 +29,7 @@ namespace WebAPI.Controllers
         {
             var response = await _productService.GetAsync(pageIndex, pageSize);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
-                return BadRequest();
+                return BadRequest(response);
             return Ok(response);
         }
         [HttpGet("Search")]
@@ -40,7 +37,7 @@ namespace WebAPI.Controllers
         {
             var response = await _productService.Search(name, pageIndex, pageSize);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
-                return BadRequest();
+                return BadRequest(response);
             return Ok(response);
         }
 
@@ -49,7 +46,7 @@ namespace WebAPI.Controllers
         {
             var response = await _productService.AddAsync(request);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
-                return BadRequest();
+                return BadRequest(response);
             return Ok(response);
         }
 
@@ -58,7 +55,7 @@ namespace WebAPI.Controllers
         {
             var response = await _productService.Update(request);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
-                return BadRequest();
+                return BadRequest(response);
             return Ok(response);
         }
 
@@ -67,7 +64,7 @@ namespace WebAPI.Controllers
         {
             var response = await _productService.Delete(id);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
-                return BadRequest();
+                return BadRequest(response);
             return Ok(response);
         }
     }

@@ -6,7 +6,7 @@ namespace Application.ViewModels.Order
         public Guid CustomerId { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal TotalAmount { get; set; }
-        public List<OrderDetails> OrderDetails { get; set; } = new List<OrderDetails>();
+        public List<OrderDetails> OrderDetails { get; set; }
     }
     public class OrderDetails
     {

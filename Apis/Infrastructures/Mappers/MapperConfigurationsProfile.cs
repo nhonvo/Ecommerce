@@ -35,6 +35,7 @@ namespace Infrastructures.Mappers
             CreateMap<UpdateOrder, Order>().ReverseMap();
             CreateMap<OrderDetails, OrderDetail>().ReverseMap();
             CreateMap<UpdateOrderDetail, OrderDetail>().ReverseMap();
+            CreateMap<AddOrderDetail, OrderDetail>().ReverseMap();
 
             // Product
             CreateMap<Product, ProductResponse>().ReverseMap();

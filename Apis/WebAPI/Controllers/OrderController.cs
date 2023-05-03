@@ -21,7 +21,7 @@ namespace WebAPI.Controllers
         {
             var response = await _orderService.GetAsync(id);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
-                return BadRequest();
+                return BadRequest(response);
             return Ok(response);
         }
         [HttpGet]
@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
         {
             var response = await _orderService.GetAsync(pageIndex, pageSize);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
-                return BadRequest();
+                return BadRequest(response);
             return Ok(response);
         }
 
@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
         {
             var response = await _orderService.AddAsync(request);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
-                return BadRequest();
+                return BadRequest(response);
             return Ok(response);
         }
 
@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
         {
             var response = await _orderService.Update(request);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
-                return BadRequest();
+                return BadRequest(response);
             return Ok(response);
         }
 
@@ -56,7 +56,7 @@ namespace WebAPI.Controllers
         {
             var response = await _orderService.Delete(id);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
-                return BadRequest();
+                return BadRequest(response);
             return Ok(response);
         }
         [HttpGet("{id}/orderItems")]
@@ -64,7 +64,7 @@ namespace WebAPI.Controllers
         {
             var response = await _orderService.GetOrder(id, pageIndex, pageSize);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
-                return BadRequest();
+                return BadRequest(response);
             return Ok(response);
         }
 
@@ -73,7 +73,7 @@ namespace WebAPI.Controllers
         {
             var response = await _orderService.AddOrder(id, request);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
-                return BadRequest();
+                return BadRequest(response);
             return Ok(response);
         }
 
@@ -82,16 +82,16 @@ namespace WebAPI.Controllers
         {
             var response = await _orderService.UpdateOrder(id, request);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
-                return BadRequest();
+                return BadRequest(response);
             return Ok(response);
         }
 
-        [HttpDelete("{id}/orderItems")]
-        public async Task<ActionResult<ApiResult<OrderResponse>>> DeleteOrder(Guid id)
+        [HttpDelete("{orderId}/orderItems/{productId}")]
+        public async Task<ActionResult<ApiResult<OrderDetails>>> DeleteOrder(Guid orderId, Guid productId)
         {
-            var response = await _orderService.DeleteOrder(id);
+            var response = await _orderService.DeleteOrder(orderId, productId);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
-                return BadRequest();
+                return BadRequest(response);
             return Ok(response);
         }
         [HttpGet("Search")]
@@ -99,7 +99,7 @@ namespace WebAPI.Controllers
         {
             var response = await _orderService.Search(name, pageIndex, pageSize);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
-                return BadRequest();
+                return BadRequest(response);
             return Ok(response);
         }
     }

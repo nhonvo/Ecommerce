@@ -15,7 +15,7 @@ namespace Application.Interfaces
         Task<ApiResult<Pagination<OrderResponse>>> GetOrder(Guid Id, int pageIndex, int pageSize);
         Task<ApiResult<OrderResponse>> AddOrder(Guid Id, AddOrderDetail request);
         Task<ApiResult<OrderResponse>> UpdateOrder(Guid Id, UpdateOrderDetail request);
-        Task<ApiResult<OrderResponse>> DeleteOrder(Guid Id);
+        Task<ApiResult<OrderDetails>> DeleteOrder(Guid orderId, Guid productId);
         Task<ApiResult<Pagination<OrderResponse>>> Search(
             string search,
             int pageIndex,

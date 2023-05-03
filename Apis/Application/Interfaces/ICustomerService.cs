@@ -64,5 +64,6 @@ namespace Application.Interfaces
         /// <param name="pageIndex">The page index of the customer to return.</param>
         /// <param name="pageSize">The size of the customer's page to return</param>
         Task<ApiResult<Pagination<CustomerResponse>>> Search(string search, int pageIndex, int pageSize);
+        Task<ApiResult<Pagination<OrderResponse>>> GetCustomerOrderDetailsAsync(Guid customerId, int pageIndex = 0, int pageSize = 10);
     }
 }

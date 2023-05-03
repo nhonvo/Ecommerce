@@ -26,7 +26,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ApiResult<Pagination<CustomerResponse>>>> Get(int pageIndex = 0, int pageSize = 10)
+        public async Task<ActionResult<ApiResult<Pagination<CustomerResponse>>>> Get(
+            int pageIndex = 0,
+            int pageSize = 10)
         {
             var response = await _customerService.GetAsync(pageIndex, pageSize);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
@@ -34,9 +36,10 @@ namespace WebAPI.Controllers
             return Ok(response);
         }
         [HttpGet("{id}/Order")]
-        public async Task<ActionResult<ApiResult<Pagination<CustomerResponse>>>> GetOrder(Guid id,
-                                                                                          int pageIndex = 0,
-                                                                                          int pageSize = 10)
+        public async Task<ActionResult<ApiResult<Pagination<CustomerResponse>>>> GetOrder(
+            Guid id,
+            int pageIndex = 0,
+            int pageSize = 10)
         {
             var response = await _customerService.GetOrder(id, pageIndex, pageSize);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
@@ -52,7 +55,10 @@ namespace WebAPI.Controllers
             return Ok(response);
         }
         [HttpPut("{id}/Order/{orderId}")]
-        public async Task<ActionResult<ApiResult<CustomerResponse>>> PostOrder(Guid id, Guid orderId, UpdateCustomerOrder request)
+        public async Task<ActionResult<ApiResult<CustomerResponse>>> PostOrder(
+            Guid id,
+            Guid orderId,
+            UpdateCustomerOrder request)
         {
             var response = await _customerService.UpdateOrder(id, orderId, request);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
@@ -67,7 +73,17 @@ namespace WebAPI.Controllers
                 return BadRequest(response);
             return Ok(response);
         }
-
+        [HttpGet("{id}/orders/details")]
+        public async Task<ActionResult<ApiResult<Pagination<OrderResponse>>>> GetOrderDetails(
+            Guid id,
+            int pageIndex = 0,
+            int pageSize = 10)
+        {
+            var response = await _customerService.GetCustomerOrderDetailsAsync(id, pageIndex, pageSize);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest(response);
+            return Ok(response);
+        }
         [HttpPost]
         public async Task<ActionResult<ApiResult<CustomerResponse>>> Post([FromBody] CreateCustomer request)
         {
@@ -95,9 +111,10 @@ namespace WebAPI.Controllers
             return Ok(response);
         }
         [HttpGet("Search")]
-        public async Task<ActionResult<ApiResult<Pagination<CustomerResponse>>>> Search(string name,
-                                                                                        int pageIndex = 0,
-                                                                                        int pageSize = 10)
+        public async Task<ActionResult<ApiResult<Pagination<CustomerResponse>>>> Search(
+            string name,
+            int pageIndex = 0,
+            int pageSize = 10)
         {
             var response = await _customerService.Search(name, pageIndex, pageSize);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)

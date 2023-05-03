@@ -215,11 +215,14 @@ namespace Infrastructures.Services
             return new ApiSuccessResult<Pagination<CustomerResponse>>(result);
         }
         #region View customer orders with product details
-        public async Task<ApiResult<Pagination<OrderDetails>>> GetCustomerOrderDetailsAsync(Guid customerId, int pageIndex = 0, int pageSize = 10)
+        public async Task<ApiResult<Pagination<OrderResponse>>> GetCustomerOrderDetailsAsync(
+            Guid customerId,
+            int pageIndex = 0,
+            int pageSize = 10)
         {
             var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(customerId);
             if (customer == null)
-                return new ApiErrorResult<Pagination<OrderDetails>>($"Customer with ID {customerId} not found.");
+                return new ApiErrorResult<Pagination<OrderResponse>>($"Customer with ID {customerId} not found.");
 
             var orders = await _unitOfWork.OrderRepository.GetAsync(
                 filter: o => o.CustomerId == customerId,
@@ -228,16 +231,9 @@ namespace Infrastructures.Services
                 pageIndex: pageIndex,
                 pageSize: pageSize);
 
-            var orderDetails = orders.Items.SelectMany(o => o.OrderDetails).ToList();
-            var orderDetailResponses = _mapper.Map<List<OrderDetails>>(orderDetails);
+            var result = _mapper.Map<Pagination<OrderResponse>>(orders);
 
-            return new ApiSuccessResult<Pagination<OrderDetails>>(new Pagination<OrderDetails>
-            {
-                PageIndex = pageIndex,
-                PageSize = pageSize,
-                TotalItemsCount = orders.TotalItemsCount,
-                Items = orderDetailResponses,
-            });
+            return new ApiSuccessResult<Pagination<OrderResponse>>(result);
         }
         #endregion
     }

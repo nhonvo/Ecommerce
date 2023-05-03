@@ -50,7 +50,7 @@
    POST /api/customers/{id}/orders: Create a new order for a customer.
    PUT /api/customers/{id}/orders/{orderId}: Update an existing order for a customer.
    DELETE /api/customers/{id}/orders/{orderId}: Delete an order for a customer.
-// TODO: TEST this API
+
    GET /api/orders/{id}/orderItems: Return a list of all order items for an order.
    POST /api/orders/{id}/orderItems: Create a new order item for an order.
    PUT /api/orders/{id}/orderItems/{orderItemId}: Update an existing order item for an order.

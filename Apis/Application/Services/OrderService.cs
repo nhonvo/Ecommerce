@@ -140,7 +140,6 @@ namespace Infrastructures.Services
         }
         #endregion
         #region Order OrderDetail
-        // FIXME: test
         public async Task<ApiResult<Pagination<OrderResponse>>> GetOrder(Guid Id, int pageIndex, int pageSize)
         {
             var order = await _unitOfWork.OrderRepository.GetAsync(
@@ -154,19 +153,34 @@ namespace Infrastructures.Services
                 return new ApiErrorResult<Pagination<OrderResponse>>("Not found the order");
             return new ApiSuccessResult<Pagination<OrderResponse>>(result);
         }
-        // FIXME: test
         public async Task<ApiResult<OrderResponse>> AddOrder(Guid Id, AddOrderDetail request)
         {
             var orderDetail = _mapper.Map<OrderDetail>(request);
 
-            var order = new Order();
+            var order = await _unitOfWork.OrderRepository.FirstOrdDefaultAsync(
+                filter: x => x.Id == Id,
+                include: x => x.Include(x => x.OrderDetails)
+            );
+            if (order == null)
+                return new ApiErrorResult<OrderResponse>("Not found the order");
 
-            order.OrderDate = DateTime.Now;
-            order.OrderDetails = (ICollection<OrderDetail>)orderDetail;
-            order.TotalAmount = await CalculateTotalPriceAsync(order.OrderDetails);
+            var existOrderDetail = await _unitOfWork.OrderDetailRepository.FirstOrdDefaultAsync(x => x.ProductId == request.ProductId);
+            _unitOfWork.BeginTransaction();
+            if (existOrderDetail != null)
+            {
+                existOrderDetail.Quantity += request.Quantity;
+                _unitOfWork.OrderDetailRepository.Update(existOrderDetail);
+                order.TotalAmount = await CalculateTotalPriceAsync(await _unitOfWork.OrderDetailRepository.GetAsync(x => x.Id != null));
+            }
+            else
+            {
+                order.OrderDate = DateTime.Now;
+                await _unitOfWork.OrderDetailRepository.AddAsync(orderDetail);
+                order.TotalAmount = await CalculateTotalPriceAsync(order.OrderDetails);
+            }
             try
             {
-                await _unitOfWork.ExecuteTransactionAsync(() => _unitOfWork.OrderRepository.AddAsync(order));
+                await _unitOfWork.CommitAsync();
 
                 var result = _mapper.Map<OrderResponse>(order);
 
@@ -178,15 +192,23 @@ namespace Infrastructures.Services
                 return new ApiErrorResult<OrderResponse>("Can't add order", new List<string> { ex.ToString() });
             }
         }
-        // FIXME: test
         public async Task<ApiResult<OrderResponse>> UpdateOrder(Guid Id, UpdateOrderDetail request)
         {
             var orderDetail = _mapper.Map<OrderDetail>(request);
 
-            var order = await _unitOfWork.OrderRepository.FirstOrdDefaultAsync(x => x.Id == Id);
+            var order = await _unitOfWork.OrderRepository.FirstOrdDefaultAsync(
+                filter: x => x.Id == Id,
+                include: x => x.Include(x => x.OrderDetails));
+
+            var updateOrderDetail = order.OrderDetails.FirstOrDefault(x => x.OrderId == order.Id && x.ProductId == request.ProductId);
+
+            if (updateOrderDetail == null)
+                return new ApiErrorResult<OrderResponse>("Can not found order details");
+            updateOrderDetail.Quantity = orderDetail.Quantity;
+
             order.OrderDate = DateTime.Now;
-            order.OrderDetails = (ICollection<OrderDetail>)orderDetail;
             order.TotalAmount = await CalculateTotalPriceAsync(order.OrderDetails);
+
             try
             {
                 await _unitOfWork.ExecuteTransactionAsync(() => _unitOfWork.OrderRepository.Update(order));
@@ -197,26 +219,25 @@ namespace Infrastructures.Services
             }
             catch (Exception ex)
             {
-                _unitOfWork.Rollback();
                 return new ApiErrorResult<OrderResponse>("Can't update order", new List<string> { ex.ToString() });
             }
         }
-        // FIXME: test
-        public async Task<ApiResult<OrderResponse>> DeleteOrder(Guid Id)
+        public async Task<ApiResult<OrderDetails>> DeleteOrder(Guid orderId, Guid productId)
         {
-            var order = await _unitOfWork.OrderRepository.FirstOrdDefaultAsync(x => x.Id == Id);
+            var orderDetail = await _unitOfWork.OrderDetailRepository.FirstOrdDefaultAsync(x => x.OrderId == orderId && x.ProductId == productId);
+            if (orderDetail == null)
+                return new ApiErrorResult<OrderDetails>("Order detail not found");
+
             try
             {
-                await _unitOfWork.ExecuteTransactionAsync(() => _unitOfWork.OrderRepository.Delete(order));
+                await _unitOfWork.ExecuteTransactionAsync(() => _unitOfWork.OrderDetailRepository.Delete(orderDetail));
+                var result = _mapper.Map<OrderDetails>(orderDetail);
 
-                var result = _mapper.Map<OrderResponse>(order);
-
-                return new ApiSuccessResult<OrderResponse>(result);
+                return new ApiSuccessResult<OrderDetails>(result);
             }
             catch (Exception ex)
             {
-                _unitOfWork.Rollback();
-                return new ApiErrorResult<OrderResponse>("Can't delete order", new List<string> { ex.ToString() });
+                return new ApiErrorResult<OrderDetails>("Can't delete order", new List<string> { ex.ToString() });
             }
         }
         #endregion
