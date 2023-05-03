@@ -1,7 +1,6 @@
 using Application.Commons;
 using Application.ViewModels.Order;
 using Application.ViewModels.OrderDetails;
-using Application.ViewModels.Product;
 using Domain.Aggregate.AppResult;
 namespace Application.Interfaces
 {

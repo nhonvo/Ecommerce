@@ -3,11 +3,9 @@ using Application.Commons;
 using Application.Interfaces;
 using Application.ViewModels.Order;
 using Application.ViewModels.OrderDetails;
-using Application.ViewModels.Product;
 using AutoMapper;
 using Domain.Aggregate.AppResult;
 using Domain.Entities;
-using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 namespace Infrastructures.Services
 {
@@ -257,6 +255,6 @@ namespace Infrastructures.Services
                 return new ApiErrorResult<Pagination<OrderResponse>>("Can't get order");
             return new ApiSuccessResult<Pagination<OrderResponse>>(result);
         }
-      
+
     }
 }

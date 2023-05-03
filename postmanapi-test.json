@@ -1,0 +1,2330 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "Ecommerce",
+      "description": "API for smail ecommerce project",
+      "contact": {
+        "url": "https://google.com"
+      },
+      "version": "v1"
+    },
+    "paths": {
+      "/api/Customer/{id}": {
+        "get": {
+          "tags": [
+            "Customer"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Customer": {
+        "get": {
+          "tags": [
+            "Customer"
+          ],
+          "parameters": [
+            {
+              "name": "pageIndex",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 0
+              }
+            },
+            {
+              "name": "pageSize",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 10
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponsePaginationApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponsePaginationApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponsePaginationApiResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Customer"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateCustomer"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateCustomer"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateCustomer"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Customer"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCustomer"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCustomer"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCustomer"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Customer"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Customer/{id}/Order": {
+        "get": {
+          "tags": [
+            "Customer"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            {
+              "name": "pageIndex",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 0
+              }
+            },
+            {
+              "name": "pageSize",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 10
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponsePaginationApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponsePaginationApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponsePaginationApiResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Customer"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Customer/{id}/Order/{orderId}": {
+        "put": {
+          "tags": [
+            "Customer"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            {
+              "name": "orderId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCustomerOrder"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCustomerOrder"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCustomerOrder"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Customer"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            {
+              "name": "orderId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Customer/{id}/orders/details": {
+        "get": {
+          "tags": [
+            "Customer"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            {
+              "name": "pageIndex",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 0
+              }
+            },
+            {
+              "name": "pageSize",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 10
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponsePaginationApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponsePaginationApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponsePaginationApiResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Customer/Search": {
+        "get": {
+          "tags": [
+            "Customer"
+          ],
+          "parameters": [
+            {
+              "name": "name",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "pageIndex",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 0
+              }
+            },
+            {
+              "name": "pageSize",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 10
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponsePaginationApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponsePaginationApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponsePaginationApiResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Customer/{id}/order/count": {
+        "get": {
+          "tags": [
+            "Customer"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Customer/{id}/orders/total": {
+        "get": {
+          "tags": [
+            "Customer"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Int32ApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Int32ApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Int32ApiResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Order/{id}": {
+        "get": {
+          "tags": [
+            "Order"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Order": {
+        "get": {
+          "tags": [
+            "Order"
+          ],
+          "parameters": [
+            {
+              "name": "pageIndex",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 0
+              }
+            },
+            {
+              "name": "pageSize",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 10
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponsePaginationApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponsePaginationApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponsePaginationApiResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Order"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateOrder"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateOrder"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateOrder"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Order"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateOrder"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateOrder"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateOrder"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Order"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Order/{id}/orderItems": {
+        "get": {
+          "tags": [
+            "Order"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            {
+              "name": "pageIndex",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 0
+              }
+            },
+            {
+              "name": "pageSize",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 10
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponsePaginationApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponsePaginationApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponsePaginationApiResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Order"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddOrderDetail"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddOrderDetail"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddOrderDetail"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Order"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateOrderDetail"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateOrderDetail"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateOrderDetail"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Order/{orderId}/orderItems/{productId}": {
+        "delete": {
+          "tags": [
+            "Order"
+          ],
+          "parameters": [
+            {
+              "name": "orderId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            {
+              "name": "productId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderDetailsApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderDetailsApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderDetailsApiResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Order/Search": {
+        "get": {
+          "tags": [
+            "Order"
+          ],
+          "parameters": [
+            {
+              "name": "name",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "pageIndex",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 0
+              }
+            },
+            {
+              "name": "pageSize",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 10
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponsePaginationApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponsePaginationApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponsePaginationApiResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Product/{id}": {
+        "get": {
+          "tags": [
+            "Product"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Product": {
+        "get": {
+          "tags": [
+            "Product"
+          ],
+          "parameters": [
+            {
+              "name": "pageIndex",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 0
+              }
+            },
+            {
+              "name": "pageSize",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 10
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponsePaginationApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponsePaginationApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponsePaginationApiResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Product"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateProduct"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateProduct"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateProduct"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Product"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateProduct"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateProduct"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateProduct"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Product"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponseApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponseApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponseApiResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Product/Search": {
+        "get": {
+          "tags": [
+            "Product"
+          ],
+          "parameters": [
+            {
+              "name": "name",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "pageIndex",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 0
+              }
+            },
+            {
+              "name": "pageSize",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 10
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponsePaginationApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponsePaginationApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductResponsePaginationApiResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Product/top-sellers/start={start}&end={end}": {
+        "get": {
+          "tags": [
+            "Product"
+          ],
+          "parameters": [
+            {
+              "name": "start",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            {
+              "name": "end",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            {
+              "name": "pageIndex",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 0
+              }
+            },
+            {
+              "name": "pageSize",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "default": 10
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TopSellingProductPagination"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TopSellingProductPagination"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TopSellingProductPagination"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/sales/{year}/{month}": {
+        "get": {
+          "tags": [
+            "Report"
+          ],
+          "parameters": [
+            {
+              "name": "year",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "month",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SalesReportApiResult"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SalesReportApiResult"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SalesReportApiResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/sales": {
+        "get": {
+          "tags": [
+            "Report"
+          ],
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SalesReport"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SalesReport"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SalesReport"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "AddOrderDetail": {
+          "type": "object",
+          "properties": {
+            "orderId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "productId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "quantity": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "CreateCustomer": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "nullable": true
+            },
+            "email": {
+              "type": "string",
+              "nullable": true
+            },
+            "phone": {
+              "type": "string",
+              "nullable": true
+            },
+            "address": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "CreateOrder": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "additionalProperties": false
+        },
+        "CreateProduct": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": {
+              "type": "string",
+              "nullable": true
+            },
+            "price": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          "additionalProperties": false
+        },
+        "CustomerOrder": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "orderDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "totalAmount": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          "additionalProperties": false
+        },
+        "CustomerResponse": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": {
+              "type": "string",
+              "nullable": true
+            },
+            "email": {
+              "type": "string",
+              "nullable": true
+            },
+            "phone": {
+              "type": "string",
+              "nullable": true
+            },
+            "address": {
+              "type": "string",
+              "nullable": true
+            },
+            "orders": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CustomerOrder"
+              },
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "CustomerResponseApiResult": {
+          "type": "object",
+          "properties": {
+            "statusCode": {
+              "$ref": "#/components/schemas/HttpStatusCode"
+            },
+            "succeeded": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string",
+              "nullable": true
+            },
+            "resultObject": {
+              "$ref": "#/components/schemas/CustomerResponse"
+            }
+          },
+          "additionalProperties": false
+        },
+        "CustomerResponsePagination": {
+          "type": "object",
+          "properties": {
+            "totalItemsCount": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "pageSize": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "totalPagesCount": {
+              "type": "integer",
+              "format": "int32",
+              "readOnly": true
+            },
+            "pageIndex": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "next": {
+              "type": "boolean",
+              "readOnly": true
+            },
+            "previous": {
+              "type": "boolean",
+              "readOnly": true
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CustomerResponse"
+              },
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "CustomerResponsePaginationApiResult": {
+          "type": "object",
+          "properties": {
+            "statusCode": {
+              "$ref": "#/components/schemas/HttpStatusCode"
+            },
+            "succeeded": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string",
+              "nullable": true
+            },
+            "resultObject": {
+              "$ref": "#/components/schemas/CustomerResponsePagination"
+            }
+          },
+          "additionalProperties": false
+        },
+        "DailySales": {
+          "type": "object",
+          "properties": {
+            "date": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "totalSales": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          "additionalProperties": false
+        },
+        "HttpStatusCode": {
+          "enum": [
+            100,
+            101,
+            102,
+            103,
+            200,
+            201,
+            202,
+            203,
+            204,
+            205,
+            206,
+            207,
+            208,
+            226,
+            300,
+            301,
+            302,
+            303,
+            304,
+            305,
+            306,
+            307,
+            308,
+            400,
+            401,
+            402,
+            403,
+            404,
+            405,
+            406,
+            407,
+            408,
+            409,
+            410,
+            411,
+            412,
+            413,
+            414,
+            415,
+            416,
+            417,
+            421,
+            422,
+            423,
+            424,
+            426,
+            428,
+            429,
+            431,
+            451,
+            500,
+            501,
+            502,
+            503,
+            504,
+            505,
+            506,
+            507,
+            508,
+            510,
+            511
+          ],
+          "type": "integer",
+          "format": "int32"
+        },
+        "Int32ApiResult": {
+          "type": "object",
+          "properties": {
+            "statusCode": {
+              "$ref": "#/components/schemas/HttpStatusCode"
+            },
+            "succeeded": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string",
+              "nullable": true
+            },
+            "resultObject": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "OrderDetails": {
+          "type": "object",
+          "properties": {
+            "orderId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "productId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "quantity": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "OrderDetailsApiResult": {
+          "type": "object",
+          "properties": {
+            "statusCode": {
+              "$ref": "#/components/schemas/HttpStatusCode"
+            },
+            "succeeded": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string",
+              "nullable": true
+            },
+            "resultObject": {
+              "$ref": "#/components/schemas/OrderDetails"
+            }
+          },
+          "additionalProperties": false
+        },
+        "OrderResponse": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "customerId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "orderDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "totalAmount": {
+              "type": "number",
+              "format": "double"
+            },
+            "orderDetails": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/OrderDetails"
+              },
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "OrderResponseApiResult": {
+          "type": "object",
+          "properties": {
+            "statusCode": {
+              "$ref": "#/components/schemas/HttpStatusCode"
+            },
+            "succeeded": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string",
+              "nullable": true
+            },
+            "resultObject": {
+              "$ref": "#/components/schemas/OrderResponse"
+            }
+          },
+          "additionalProperties": false
+        },
+        "OrderResponsePagination": {
+          "type": "object",
+          "properties": {
+            "totalItemsCount": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "pageSize": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "totalPagesCount": {
+              "type": "integer",
+              "format": "int32",
+              "readOnly": true
+            },
+            "pageIndex": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "next": {
+              "type": "boolean",
+              "readOnly": true
+            },
+            "previous": {
+              "type": "boolean",
+              "readOnly": true
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/OrderResponse"
+              },
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "OrderResponsePaginationApiResult": {
+          "type": "object",
+          "properties": {
+            "statusCode": {
+              "$ref": "#/components/schemas/HttpStatusCode"
+            },
+            "succeeded": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string",
+              "nullable": true
+            },
+            "resultObject": {
+              "$ref": "#/components/schemas/OrderResponsePagination"
+            }
+          },
+          "additionalProperties": false
+        },
+        "ProductResponse": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": {
+              "type": "string",
+              "nullable": true
+            },
+            "price": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          "additionalProperties": false
+        },
+        "ProductResponseApiResult": {
+          "type": "object",
+          "properties": {
+            "statusCode": {
+              "$ref": "#/components/schemas/HttpStatusCode"
+            },
+            "succeeded": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string",
+              "nullable": true
+            },
+            "resultObject": {
+              "$ref": "#/components/schemas/ProductResponse"
+            }
+          },
+          "additionalProperties": false
+        },
+        "ProductResponsePagination": {
+          "type": "object",
+          "properties": {
+            "totalItemsCount": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "pageSize": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "totalPagesCount": {
+              "type": "integer",
+              "format": "int32",
+              "readOnly": true
+            },
+            "pageIndex": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "next": {
+              "type": "boolean",
+              "readOnly": true
+            },
+            "previous": {
+              "type": "boolean",
+              "readOnly": true
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ProductResponse"
+              },
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "ProductResponsePaginationApiResult": {
+          "type": "object",
+          "properties": {
+            "statusCode": {
+              "$ref": "#/components/schemas/HttpStatusCode"
+            },
+            "succeeded": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string",
+              "nullable": true
+            },
+            "resultObject": {
+              "$ref": "#/components/schemas/ProductResponsePagination"
+            }
+          },
+          "additionalProperties": false
+        },
+        "SalesReport": {
+          "type": "object",
+          "properties": {
+            "year": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "month": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "startDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "endDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "totalSales": {
+              "type": "number",
+              "format": "double"
+            },
+            "dailySales": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/DailySales"
+              },
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "SalesReportApiResult": {
+          "type": "object",
+          "properties": {
+            "statusCode": {
+              "$ref": "#/components/schemas/HttpStatusCode"
+            },
+            "succeeded": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string",
+              "nullable": true
+            },
+            "resultObject": {
+              "$ref": "#/components/schemas/SalesReport"
+            }
+          },
+          "additionalProperties": false
+        },
+        "TopSellingProduct": {
+          "type": "object",
+          "properties": {
+            "productId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "productName": {
+              "type": "string",
+              "nullable": true
+            },
+            "totalQuantity": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "TopSellingProductPagination": {
+          "type": "object",
+          "properties": {
+            "totalItemsCount": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "pageSize": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "totalPagesCount": {
+              "type": "integer",
+              "format": "int32",
+              "readOnly": true
+            },
+            "pageIndex": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "next": {
+              "type": "boolean",
+              "readOnly": true
+            },
+            "previous": {
+              "type": "boolean",
+              "readOnly": true
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/TopSellingProduct"
+              },
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "UpdateCustomer": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": {
+              "type": "string",
+              "nullable": true
+            },
+            "email": {
+              "type": "string",
+              "nullable": true
+            },
+            "phone": {
+              "type": "string",
+              "nullable": true
+            },
+            "address": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "UpdateCustomerOrder": {
+          "type": "object",
+          "properties": {
+            "orderDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "totalAmount": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          "additionalProperties": false
+        },
+        "UpdateOrder": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "customerId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "orderDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "totalAmount": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          "additionalProperties": false
+        },
+        "UpdateOrderDetail": {
+          "type": "object",
+          "properties": {
+            "orderId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "productId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "quantity": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "UpdateProduct": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": {
+              "type": "string",
+              "nullable": true
+            },
+            "price": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "securitySchemes": {
+        "Bearer": {
+          "type": "http",
+          "description": "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+          "scheme": "bearer"
+        }
+      }
+    },
+    "security": [
+      {
+        "Bearer": [
+          "Bearer"
+        ]
+      }
+    ]
+  }

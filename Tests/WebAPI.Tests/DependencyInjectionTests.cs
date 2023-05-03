@@ -1,9 +1,7 @@
 ﻿using Application.Interfaces;
-using Application.Repositories;
 using Application.Services;
 using FluentAssertions;
 using Infrastructures;
-using Infrastructures.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

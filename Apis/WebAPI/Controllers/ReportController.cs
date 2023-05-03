@@ -1,8 +1,8 @@
-using System.Net;
 using Application.Interfaces;
 using Application.ViewModels.Order;
 using Domain.Aggregate.AppResult;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace WebAPI.Controllers
 {
@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
         [HttpGet("/sales")]
         public async Task<ActionResult<SalesReport>> GetSalesByDateRange(DateTime startDate, DateTime endDate)
         {
-             var response = await _orderDetailService.GetSalesReport(startDate, endDate);
+            var response = await _orderDetailService.GetSalesReport(startDate, endDate);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
                 return BadRequest(response);
             return Ok(response);

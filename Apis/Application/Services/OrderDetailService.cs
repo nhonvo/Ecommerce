@@ -47,7 +47,7 @@ namespace Infrastructures.Services
                 pageIndex: 0,
                 pageSize: int.MaxValue);
 
-            var orderDetail = orders.Items.SelectMany(x=>x.OrderDetails);
+            var orderDetail = orders.Items.SelectMany(x => x.OrderDetails);
             var total = await CalculateTotalPriceAsync(orderDetail);
 
 
