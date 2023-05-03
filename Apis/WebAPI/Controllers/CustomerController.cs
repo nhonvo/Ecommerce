@@ -84,6 +84,7 @@ namespace WebAPI.Controllers
                 return BadRequest(response);
             return Ok(response);
         }
+
         [HttpPost]
         public async Task<ActionResult<ApiResult<CustomerResponse>>> Post([FromBody] CreateCustomer request)
         {
@@ -118,6 +119,22 @@ namespace WebAPI.Controllers
         {
             var response = await _customerService.Search(name, pageIndex, pageSize);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest(response);
+            return Ok(response);
+        }
+        [HttpGet("{id}/order/count")]
+        public async Task<ActionResult<ApiResult<CustomerResponse>>> GetOrderCount(Guid id)
+        {
+            var response = await _customerService.GetCustomerOrdersCountAsync(id);
+            if (response.StatusCode != HttpStatusCode.OK)
+                return BadRequest(response);
+            return Ok(response);
+        }
+        [HttpGet("{id}/orders/total")]
+        public async Task<ActionResult<ApiResult<int>>> GetNumberOrder(Guid id)
+        {
+            var response = await _customerService.GetNumberOrder(id);
+            if (response.StatusCode != HttpStatusCode.OK)
                 return BadRequest(response);
             return Ok(response);
         }

@@ -20,13 +20,7 @@ namespace Application.Interfaces
             string search,
             int pageIndex,
             int pageSize);
-        Task<ApiResult<Pagination<TopSellingProduct>>> GetTopSellingProducts(
-          DateTime start,
-          DateTime end,
-          int pageIndex = 0,
-          int pageSize = 10);
-        Task<ApiResult<int>> GetCustomerOrdersCountAsync(Guid customerId);
+      
         Task<ApiResult<decimal>> GetAverageOrderValue(DateTime start, DateTime end);
-        Task<ApiResult<decimal>> GetCustomerRevenue(Guid customerId);
     }
 }

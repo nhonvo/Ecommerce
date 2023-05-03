@@ -236,5 +236,23 @@ namespace Infrastructures.Services
             return new ApiSuccessResult<Pagination<OrderResponse>>(result);
         }
         #endregion
+        public async Task<ApiResult<int>> GetCustomerOrdersCountAsync(Guid id)
+        {
+            var ordersCount = await _unitOfWork.OrderRepository.CountAsync(
+                filter: o => o.CustomerId == id);
+            return new ApiSuccessResult<int>(ordersCount);
+        }
+        public async Task<ApiResult<int>> GetNumberOrder(Guid id)
+        {
+            // Retrieve all orders placed by the customer
+            var orders = await _unitOfWork.OrderRepository.GetAsync(
+                filter: o => o.CustomerId == id,
+                include: o => o.Include(o => o.OrderDetails),
+                pageIndex: 0,
+                pageSize: int.MaxValue);
+
+            int totalRevenue = orders.Items.Count();
+            return new ApiSuccessResult<int>(totalRevenue);
+        }
     }
 }

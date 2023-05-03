@@ -5,6 +5,9 @@ using Application.ViewModels.Product;
 using AutoMapper;
 using Domain.Aggregate.AppResult;
 using Domain.Entities;
+using Domain.Enums;
+using Microsoft.EntityFrameworkCore;
+
 namespace Infrastructures.Services
 {
     public class ProductService : IProductService
@@ -107,6 +110,49 @@ namespace Infrastructures.Services
             if (result == null)
                 return new ApiErrorResult<Pagination<ProductResponse>>("Can't get product");
             return new ApiSuccessResult<Pagination<ProductResponse>>(result);
+        }
+        public async Task<ApiResult<Pagination<TopSellingProduct>>> GetTopSellingProducts(
+            DateTime start,
+            DateTime end,
+            int pageIndex = 0,
+            int pageSize = 10)
+        {
+            var orderDetails = await _unitOfWork.OrderDetailRepository.GetAsync(
+                filter: od => od.Order.OrderDate >= start && od.Order.OrderDate <= end,
+                include: od => od.Include(od => od.Product),
+                pageIndex: pageIndex,
+                pageSize: pageSize,
+                sortColumn: od => od.Quantity,
+                sortDirection: SortDirection.Descending);
+
+            var products = orderDetails.Items.GroupBy(od => od.Product)
+                .Select(group => new
+                {
+                    Product = group.Key,
+                    TotalQuantity = group.Sum(od => od.Quantity)
+                })
+                .OrderByDescending(group => group.TotalQuantity)
+                .Skip(pageIndex * pageSize)
+                .Take(pageSize)
+                .Select(group => new TopSellingProduct
+                {
+                    ProductId = group.Product.Id,
+                    ProductName = group.Product.Name,
+                    TotalQuantity = group.TotalQuantity
+                })
+                .ToList();
+
+            if (products == null)
+                return new ApiErrorResult<Pagination<TopSellingProduct>>("Can't get product");
+
+            var pagination = new Pagination<TopSellingProduct>
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                TotalItemsCount = orderDetails.TotalItemsCount,
+                Items = products
+            };
+            return new ApiSuccessResult<Pagination<TopSellingProduct>>(pagination);
         }
     }
 }

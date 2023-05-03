@@ -15,7 +15,6 @@ namespace WebAPI.Controllers
         {
             _productService = productService;
         }
-        // TODO: write unit test.
         [HttpGet("{id}")]
         public async Task<ActionResult<ApiResult<ProductResponse>>> Get(Guid id)
         {
@@ -63,6 +62,18 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<ApiResult<ProductResponse>>> Delete(string id)
         {
             var response = await _productService.Delete(id);
+            if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
+                return BadRequest(response);
+            return Ok(response);
+        }
+        [HttpGet("top-sellers/start={start}&end={end}")]
+        public async Task<ActionResult<Pagination<TopSellingProduct>>> GetTopSellingProducts(
+           DateTime start,
+           DateTime end,
+           int pageIndex = 0,
+           int pageSize = 10)
+        {
+            var response = await _productService.GetTopSellingProducts(start, end, pageIndex, pageSize);
             if (response.StatusCode != HttpStatusCode.OK && response.ResultObject == null)
                 return BadRequest(response);
             return Ok(response);

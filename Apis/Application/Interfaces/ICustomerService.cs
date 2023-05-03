@@ -65,5 +65,7 @@ namespace Application.Interfaces
         /// <param name="pageSize">The size of the customer's page to return</param>
         Task<ApiResult<Pagination<CustomerResponse>>> Search(string search, int pageIndex, int pageSize);
         Task<ApiResult<Pagination<OrderResponse>>> GetCustomerOrderDetailsAsync(Guid customerId, int pageIndex = 0, int pageSize = 10);
+        Task<ApiResult<int>> GetCustomerOrdersCountAsync(Guid id);
+        Task<ApiResult<int>> GetNumberOrder(Guid id);
     }
 }
