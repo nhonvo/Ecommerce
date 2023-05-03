@@ -2,6 +2,8 @@ using Application;
 using Application.Interfaces;
 using Application.ViewModels.Order;
 using AutoMapper;
+using Domain.Aggregate.AppResult;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructures.Services
@@ -18,8 +20,26 @@ namespace Infrastructures.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        private async Task<decimal> CalculateTotalPriceAsync(IEnumerable<OrderDetail> orderDetails)
+        {
+            decimal totalPrice = 0;
 
-        public async Task<SalesReport> GetSalesReport(DateTime startDate, DateTime endDate)
+            foreach (var item in orderDetails)
+            {
+                var product = await _unitOfWork.ProductRepository.FirstOrDefaultAsync(x => x.Id == item.ProductId);
+                /// if product is not found for this ProductId
+                if (product == null)
+                {
+                    throw new Exception($"Product not found for ProductId: {item.ProductId}");
+                }
+
+                decimal itemPrice = product.Price * item.Quantity;
+                totalPrice += itemPrice;
+            }
+
+            return totalPrice;
+        }
+        public async Task<ApiResult<SalesReport>> GetSalesReport(DateTime startDate, DateTime endDate)
         {
             var orders = await _unitOfWork.OrderRepository.GetAsync(
                 filter: o => o.OrderDate >= startDate && o.OrderDate <= endDate,
@@ -27,10 +47,13 @@ namespace Infrastructures.Services
                 pageIndex: 0,
                 pageSize: int.MaxValue);
 
+            var orderDetail = orders.Items.SelectMany(x=>x.OrderDetails);
+            var total = await CalculateTotalPriceAsync(orderDetail);
+
+
             var salesByDay = orders.Items.GroupBy(
                     o => new { Year = o.OrderDate.Year, Month = o.OrderDate.Month, Day = o.OrderDate.Day })
-                // fix quality
-                .Select(g => new { Date = g.Key, TotalSales = g.Sum(o => o.OrderDetails.Sum(od => od.Quantity * od.Quantity)) })
+                .Select(g => new { Date = g.Key, TotalSales = total })
                 .OrderBy(g => g.Date.Year)
                 .ThenBy(g => g.Date.Month)
                 .ThenBy(g => g.Date.Day)
@@ -50,15 +73,16 @@ namespace Infrastructures.Services
                 }).ToList()
             };
 
-            return salesReport;
+            return new ApiSuccessResult<SalesReport>(salesReport);
         }
 
-        public async Task<SalesReport> GetSalesReport(int year, int month)
+        public async Task<ApiResult<SalesReport>> GetSalesReport(int year, int month)
         {
             var startDate = new DateTime(year, month, 1);
             var endDate = startDate.AddMonths(1).AddDays(-1);
 
-            return await GetSalesReport(startDate, endDate);
+            var result = await GetSalesReport(startDate, endDate);
+            return new ApiSuccessResult<SalesReport>(result.ResultObject);
         }
     }
 }

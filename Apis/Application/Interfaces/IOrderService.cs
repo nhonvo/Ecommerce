@@ -20,7 +20,5 @@ namespace Application.Interfaces
             string search,
             int pageIndex,
             int pageSize);
-      
-        Task<ApiResult<decimal>> GetAverageOrderValue(DateTime start, DateTime end);
     }
 }
